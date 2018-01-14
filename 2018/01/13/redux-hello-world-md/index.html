@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="什么是redux？&amp;nbsp;&amp;nbsp; redux 是一个JavaScript App的可预测的状态管理器。 何时用redux？&amp;nbsp;&amp;nbsp; 拿react来作比，我们都知道，react的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.">
+<meta name="description" content="什么是redux？&amp;nbsp;&amp;nbsp; Redux 是一个JavaScript App的可预测的状态管理器。 何时用redux？&amp;nbsp;&amp;nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句只有遇到React实在解决不了的问题时候到你才需要使用Redux。简单讲，如果你的应用相对比较简单，视图层只从单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识redux">
 <meta property="og:url" content="https://www.choleece.cn/2018/01/13/redux-hello-world-md/index.html">
 <meta property="og:site_name" content="choleece">
-<meta property="og:description" content="什么是redux？&amp;nbsp;&amp;nbsp; redux 是一个JavaScript App的可预测的状态管理器。 何时用redux？&amp;nbsp;&amp;nbsp; 拿react来作比，我们都知道，react的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.">
-<meta property="og:updated_time" content="2018-01-14T14:53:52.665Z">
+<meta property="og:description" content="什么是redux？&amp;nbsp;&amp;nbsp; Redux 是一个JavaScript App的可预测的状态管理器。 何时用redux？&amp;nbsp;&amp;nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句只有遇到React实在解决不了的问题时候到你才需要使用Redux。简单讲，如果你的应用相对比较简单，视图层只从单">
+<meta property="og:updated_time" content="2018-01-14T15:24:40.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识redux">
-<meta name="twitter:description" content="什么是redux？&amp;nbsp;&amp;nbsp; redux 是一个JavaScript App的可预测的状态管理器。 何时用redux？&amp;nbsp;&amp;nbsp; 拿react来作比，我们都知道，react的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.">
+<meta name="twitter:description" content="什么是redux？&amp;nbsp;&amp;nbsp; Redux 是一个JavaScript App的可预测的状态管理器。 何时用redux？&amp;nbsp;&amp;nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句只有遇到React实在解决不了的问题时候到你才需要使用Redux。简单讲，如果你的应用相对比较简单，视图层只从单">
 
 
 
@@ -298,9 +298,20 @@
       
 
       
-        <h2 id="什么是redux？"><a href="#什么是redux？" class="headerlink" title="什么是redux？"></a>什么是redux？</h2><p>&nbsp;&nbsp; redux 是一个JavaScript App的可预测的状态管理器。</p>
-<h2 id="何时用redux？"><a href="#何时用redux？" class="headerlink" title="何时用redux？"></a>何时用redux？</h2><p>&nbsp;&nbsp; 拿react来作比，我们都知道，react的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.</p>
+        <h2 id="什么是redux？"><a href="#什么是redux？" class="headerlink" title="什么是redux？"></a>什么是redux？</h2><p>&nbsp;&nbsp; Redux 是一个JavaScript App的可预测的状态管理器。</p>
+<h2 id="何时用redux？"><a href="#何时用redux？" class="headerlink" title="何时用redux？"></a>何时用redux？</h2><p>&nbsp;&nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句<em>只有遇到React实在解决不了的问题时候到你才需要使用Redux</em>。简单讲，如果你的应用相对比较简单，视图层只从单一的数据源获取数据，操作相对比较简单，你就不需要使用Redux。拿react来作比，我们都知道，React的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.</p>
+<h2 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h2><p>  总结起来，两句话：</p>
+<ul>
+<li>web应用是一个状态机器，视图与状态是一一对应的</li>
+<li>应用所有的状态，都保存在一个对象树里，随处可取</li>
+</ul>
+<h2 id="Redux-的安装"><a href="#Redux-的安装" class="headerlink" title="Redux 的安装"></a>Redux 的安装</h2><pre><code>npm install redux --save
+</code></pre><h2 id="Redux的基本概念"><a href="#Redux的基本概念" class="headerlink" title="Redux的基本概念"></a>Redux的基本概念</h2><h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><pre><code>Store就是Redux管理整个web应用状态的地方，应用在任何地方可以从这棵状态树上取得数据，用于组件的渲染和计算
+Redux提供createStore这个函数创建Store，整个应用只允许有一个Store。
 
+import { createStore } from &apos;redux&apos;;
+const store = createStore(fn);
+</code></pre>
       
     </div>
     
@@ -430,7 +441,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是redux？"><span class="nav-number">1.</span> <span class="nav-text">什么是redux？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时用redux？"><span class="nav-number">2.</span> <span class="nav-text">何时用redux？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是redux？"><span class="nav-number">1.</span> <span class="nav-text">什么是redux？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时用redux？"><span class="nav-number">2.</span> <span class="nav-text">何时用redux？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计思想"><span class="nav-number">3.</span> <span class="nav-text">设计思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux-的安装"><span class="nav-number">4.</span> <span class="nav-text">Redux 的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux的基本概念"><span class="nav-number">5.</span> <span class="nav-text">Redux的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Store"><span class="nav-number">5.1.</span> <span class="nav-text">Store</span></a></li></ol></li></ol></div>
             
 
           </div>
