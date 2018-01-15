@@ -299,20 +299,29 @@
       
         
           
-            <h2 id="什么是redux？"><a href="#什么是redux？" class="headerlink" title="什么是redux？"></a>什么是redux？</h2><p>&nbsp;&nbsp; Redux 是一个JavaScript App的可预测的状态管理器。</p>
-<h2 id="何时用redux？"><a href="#何时用redux？" class="headerlink" title="何时用redux？"></a>何时用redux？</h2><p>&nbsp;&nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句<em>只有遇到React实在解决不了的问题时候到你才需要使用Redux</em>。简单讲，如果你的应用相对比较简单，视图层只从单一的数据源获取数据，操作相对比较简单，你就不需要使用Redux。拿react来作比，我们都知道，React的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.</p>
+            <h2 id="什么是Redux？"><a href="#什么是Redux？" class="headerlink" title="什么是Redux？"></a>什么是Redux？</h2><p>&nbsp;&nbsp; Redux 是一个JavaScript App的可预测的状态管理器。</p>
+<h2 id="何时用Redux？"><a href="#何时用Redux？" class="headerlink" title="何时用Redux？"></a>何时用Redux？</h2><p>&nbsp;&nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句<em>只有遇到React实在解决不了的问题时候到你才需要使用Redux</em>。简单讲，如果你的应用相对比较简单，视图层只从单一的数据源获取数据，操作相对比较简单，你就不需要使用Redux。拿react来作比，我们都知道，React的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.</p>
 <h2 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h2><p>  总结起来，两句话：</p>
 <ul>
 <li>web应用是一个状态机器，视图与状态是一一对应的</li>
 <li>应用所有的状态，都保存在一个对象树里，随处可取</li>
 </ul>
 <h2 id="Redux-的安装"><a href="#Redux-的安装" class="headerlink" title="Redux 的安装"></a>Redux 的安装</h2><pre><code>npm install redux --save
-</code></pre><h2 id="Redux的基本概念"><a href="#Redux的基本概念" class="headerlink" title="Redux的基本概念"></a>Redux的基本概念</h2><h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><pre><code>Store就是Redux管理整个web应用状态的地方，应用在任何地方可以从这棵状态树上取得数据，用于组件的渲染和计算
-Redux提供createStore这个函数创建Store，整个应用只允许有一个Store。
-
-import { createStore } from &apos;redux&apos;;
+</code></pre><h2 id="Redux的基本概念"><a href="#Redux的基本概念" class="headerlink" title="Redux的基本概念"></a>Redux的基本概念</h2><h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><p>  Store就是Redux管理整个web应用状态的地方，应用在任何地方可以从这棵状态树上取得数据，用于组件的渲染和计算<br>  Redux提供createStore这个函数创建Store，整个应用只允许有一个Store。</p>
+<pre><code>import { createStore } from &apos;redux&apos;;
 const store = createStore(fn);
-</code></pre>
+</code></pre><h3 id="State"><a href="#State" class="headerlink" title="State"></a>State</h3><p>  前面我们介绍到，Store包含了整个web（当然此时每个组件内部也可同时维护自己的state）应用的状态数据，如果想得到某个时刻的状态，那么就可以从这棵状态树上获取自己的数据。这个时刻的数据，就叫做State,当前时刻的数据，可以通过store.getState()函数获取。</p>
+<pre><code>import { createStore } from &apos;redux&apos;;
+const store = createStore(fn);
+const state = store.getState();
+</code></pre><p>  在开发React的时候，我们知道，state对应view，跟视图层相关的state，如果state值相同，则渲染出来的UI相同。</p>
+<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><p>  前面有提到过，State的变化，可能会导致View的变化。用户能接触到的是视图层，只能通过某种事件来触发State的改变，Action就是充当中间的信使，表示State要更新了<br>  Action是一个对象，其中type属性是必须的,表述Action要做什么操作。</p>
+<pre><code>const action = {
+  type: ADD_LIST,
+  payload: &apos;Redux&apos;
+}
+</code></pre><p>  在上述代码中，要做的操作是ADD_LIST，所携带的信息payload的内容为Redux。从上述例子可以看出，Action描述的是将要发生的事，改变State唯一的途径就是通过触发Action。</p>
+
           
         
       
