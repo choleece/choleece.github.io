@@ -85,7 +85,7 @@
 <meta property="og:url" content="https://www.choleece.cn/2018/01/16/tab-view-md/index.html">
 <meta property="og:site_name" content="choleece">
 <meta property="og:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
-<meta property="og:updated_time" content="2018-01-16T15:14:05.147Z">
+<meta property="og:updated_time" content="2018-01-16T15:16:08.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小程序TabView">
 <meta name="twitter:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
@@ -319,7 +319,7 @@
     &lt;/swiper&gt;
   &lt;/view&gt;
 &lt;/view&gt;
-</code></pre><p>  以上代码是整个页面的布局， 可滑动的body我们用swiper组成，接下来是组成页面的数据滑动或者点击的方法，代码如下：</p>
+</code></pre><h3 id="建立wxjs"><a href="#建立wxjs" class="headerlink" title="建立wxjs"></a>建立wxjs</h3><p>  以上代码是整个页面的布局， 可滑动的body我们用swiper组成，接下来是组成页面的数据滑动或者点击的方法，代码如下：</p>
 <pre><code>// pages/newMusic/index.js
 Page({
   /**
@@ -370,7 +370,7 @@ Page({
     this._updateSelectedPage(e.currentTarget.dataset.index);
   }
 });
-</code></pre><p>  以下内容为页面样式：</p>
+</code></pre><h3 id="建立WXSS"><a href="#建立WXSS" class="headerlink" title="建立WXSS"></a>建立WXSS</h3><p>  以下内容为页面样式：</p>
 <pre><code>.stv-container {
   height: 100%
 }
@@ -560,7 +560,7 @@ Page({
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxml"><span class="nav-number">1.</span> <span class="nav-text">建立wxml</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxml"><span class="nav-number">1.</span> <span class="nav-text">建立wxml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxjs"><span class="nav-number">2.</span> <span class="nav-text">建立wxjs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立WXSS"><span class="nav-number">3.</span> <span class="nav-text">建立WXSS</span></a></li></ol></div>
             
 
           </div>
