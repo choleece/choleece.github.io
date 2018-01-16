@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="什么是Redux？&amp;nbsp;&amp;nbsp; Redux 是一个JavaScript App的可预测的状态管理器。 何时用Redux？&amp;nbsp;&amp;nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句只有遇到React实在解决不了的问题时候到你才需要使用Redux。简单讲，如果你的应用相对比较简单，视图层只从单">
+<meta name="description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
 <meta property="og:type" content="article">
-<meta property="og:title" content="初识redux">
-<meta property="og:url" content="https://www.choleece.cn/2018/01/13/redux-hello-world-md/index.html">
+<meta property="og:title" content="小程序TabView">
+<meta property="og:url" content="https://www.choleece.cn/2018/01/16/tab-view-md/index.html">
 <meta property="og:site_name" content="choleece">
-<meta property="og:description" content="什么是Redux？&amp;nbsp;&amp;nbsp; Redux 是一个JavaScript App的可预测的状态管理器。 何时用Redux？&amp;nbsp;&amp;nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句只有遇到React实在解决不了的问题时候到你才需要使用Redux。简单讲，如果你的应用相对比较简单，视图层只从单">
-<meta property="og:updated_time" content="2018-01-15T14:14:58.084Z">
+<meta property="og:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
+<meta property="og:updated_time" content="2018-01-16T15:14:05.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="初识redux">
-<meta name="twitter:description" content="什么是Redux？&amp;nbsp;&amp;nbsp; Redux 是一个JavaScript App的可预测的状态管理器。 何时用Redux？&amp;nbsp;&amp;nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句只有遇到React实在解决不了的问题时候到你才需要使用Redux。简单讲，如果你的应用相对比较简单，视图层只从单">
+<meta name="twitter:title" content="小程序TabView">
+<meta name="twitter:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
 
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="https://www.choleece.cn/2018/01/13/redux-hello-world-md/"/>
+  <link rel="canonical" href="https://www.choleece.cn/2018/01/16/tab-view-md/"/>
 
 
 
 
 
-  <title>初识redux | choleece</title>
+  <title>小程序TabView | choleece</title>
   
 
 
@@ -231,7 +231,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/01/13/redux-hello-world-md/">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/01/16/tab-view-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="choleece">
@@ -248,7 +248,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">初识redux</h1>
+          <h1 class="post-title" itemprop="name headline">小程序TabView</h1>
         
 
         <div class="post-meta">
@@ -260,8 +260,8 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-13T19:58:33+08:00">
-                2018-01-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-16T23:03:11+08:00">
+                2018-01-16
               </time>
             
 
@@ -298,29 +298,123 @@
       
 
       
-        <h2 id="什么是Redux？"><a href="#什么是Redux？" class="headerlink" title="什么是Redux？"></a>什么是Redux？</h2><p>&nbsp;&nbsp; Redux 是一个JavaScript App的可预测的状态管理器。</p>
-<h2 id="何时用Redux？"><a href="#何时用Redux？" class="headerlink" title="何时用Redux？"></a>何时用Redux？</h2><p>&nbsp;&nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句<em>只有遇到React实在解决不了的问题时候到你才需要使用Redux</em>。简单讲，如果你的应用相对比较简单，视图层只从单一的数据源获取数据，操作相对比较简单，你就不需要使用Redux。拿React来作比，我们都知道，React的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.</p>
-<h2 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h2><p>  总结起来，两句话：</p>
-<ul>
-<li>web应用是一个状态机器，视图与状态是一一对应的</li>
-<li>应用所有的状态，都保存在一个对象树里，随处可取</li>
-</ul>
-<h2 id="Redux-的安装"><a href="#Redux-的安装" class="headerlink" title="Redux 的安装"></a>Redux 的安装</h2><pre><code>npm install redux --save
-</code></pre><h2 id="Redux的基本概念"><a href="#Redux的基本概念" class="headerlink" title="Redux的基本概念"></a>Redux的基本概念</h2><h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><p>  Store就是Redux管理整个web应用状态的地方，应用在任何地方可以从这棵状态树上取得数据，用于组件的渲染和计算<br>  Redux提供createStore这个函数创建Store，整个应用只允许有一个Store。</p>
-<pre><code>import { createStore } from &apos;redux&apos;;
-const store = createStore(fn);
-</code></pre><h3 id="State"><a href="#State" class="headerlink" title="State"></a>State</h3><p>  前面我们介绍到，Store包含了整个web（当然此时每个组件内部也可同时维护自己的state）应用的状态数据，如果想得到某个时刻的状态，那么就可以从这棵状态树上获取自己的数据。这个时刻的数据，就叫做State,当前时刻的数据，可以通过store.getState()函数获取。</p>
-<pre><code>import { createStore } from &apos;redux&apos;;
-const store = createStore(fn);
-const state = store.getState();
-</code></pre><p>  在开发React的时候，我们知道，state对应view，跟视图层相关的state，如果state值相同，则渲染出来的UI相同。</p>
-<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><p>  前面有提到过，State的变化，可能会导致View的变化。用户能接触到的是视图层，只能通过某种事件来触发State的改变，Action就是充当中间的信使，表示State要更新了<br>  Action是一个对象，其中type属性是必须的,表述Action要做什么操作。</p>
-<pre><code>const action = {
-  type: ADD_LIST,
-  payload: &apos;Redux&apos;
-}
-</code></pre><p>  在上述代码中，要做的操作是ADD_LIST，所携带的信息payload的内容为Redux。从上述例子可以看出，Action描述的是将要发生的事，改变State唯一的途径就是通过触发Action。</p>
+        <p>下面我们将利用小程序的scroll-view &amp; swipper制作tab-view</p>
+<h3 id="建立wxml"><a href="#建立wxml" class="headerlink" title="建立wxml"></a>建立wxml</h3><p>整个页面由顶部的标题栏+可滑动的body组成</p>
+<pre><code>&lt;view class=&quot;stv-container&quot;&gt;
+  &lt;view class=&quot;tab-bar&quot;&gt;
+    &lt;view wx:for=&quot;{{titles}}&quot; wx:key=&quot;unique&quot; data-index=&quot;{{index}}&quot; bindtap=&quot;handlerTabTap&quot; class=&quot;tab {{activeIndex==index?'tab-active':''}}&quot; style=&quot;width: {{stv.windowWidth/titles.length}}px&quot;&gt;
+        &lt;text&gt;{{item}}&lt;/text&gt;
+    &lt;/view&gt;
+    &lt;view style=&quot;width: {{stv.lineWidth}}px; left: {{stv.offset/titles.length}}px&quot; class=&quot;under-line {{!stv.tStart? 'withAnimate': ''}}&quot;&gt;&lt;/view&gt;
+  &lt;/view&gt;
+  &lt;view style=&quot;padding: 15px; height: 100%; margin-top: 30px; background-color: #fafafa&quot;&gt;
+    &lt;swiper duration=&quot;500&quot; bindchange=&quot;swiper&quot; current=&quot;{{activeIndex}}&quot; style=&quot;height: 100%&quot;&gt;
+        &lt;block wx:for=&quot;{{contents}}&quot; wx:key=&quot;*this&quot;&gt;
+            &lt;swiper-item&gt;
+                &lt;view style=&quot;height: 100%&quot;&gt;
+                    &lt;text&gt;{{contents[index]}}&lt;/text&gt;
+                &lt;/view&gt;
+            &lt;/swiper-item&gt;
+        &lt;/block&gt;
+    &lt;/swiper&gt;
+  &lt;/view&gt;
+&lt;/view&gt;
+</code></pre><p>  以上代码是整个页面的布局， 可滑动的body我们用swiper组成，接下来是组成页面的数据滑动或者点击的方法，代码如下：</p>
+<pre><code>// pages/newMusic/index.js
+Page({
+  /**
+  * 页面的初始数据
+  */
+  data: {
+    activeIndex: 0,
+    stv: {
+      windowWidth: 0,
+      lineWidth: 0,
+      offset: 0,
+      tStart: false
+    },
+    titles: [&apos;文字一&apos;, &apos;文字二&apos;, &apos;文字三&apos;, &apos;文字四&apos;],
+    contents: [
+      &quot;小时候，我穿着老爸的直筒袜，想象着我在大西部论坛球馆，投中制胜球的样子，我就深深明白一件事，我爱上了篮球，我爱你如此深以致贡献所有， 我的思想和身体， 我的精神和灵魂， 六岁开始， 我就深爱着你&quot;,
+      &quot;从未想到过结束，我只看到自己，在这条路上奔跑到尽头，所以我不停地跑，在 每个球馆我全力奔跑，为你争取每次机会，你要求我拼尽所有，所以我奉上真心，因为这里包含太多，我带着汗水和伤痛，不仅因为挑战&quot;,
+      &quot;而是你在召唤我，我为你奉献所有，因为你也赠予我全部，因为篮球，我感到是一个鲜活的人，你让6岁孩子实现湖人梦，为此我将永远爱你，但我不能再迷恋你，这个赛季是我仅能给，心还能继续承受打击，意志也还能被碾磨&quot;,
+      &quot;但身体知道是时候说再见，我已经准备让你离开，现在只是想让你知道，我们能永远珍藏着每段时光，无论是好的，还是坏的，我们已贡献给彼此，所有的全部，无论接下来我会做什么，我都会是那个孩子，穿着老爸直筒袜，瞄准角落里的垃圾桶&quot;
+      ]
+    },
 
+  /**
+  * 生命周期函数--监听页面加载
+  */
+  onLoad: function (options) {},
+
+  bodyChange: function(e) {
+    console.log(e.target.dataset.value);
+    this.setData({
+      activeIndex: e.target.dataset.value
+    });
+  },
+  swiper: function(e){
+    this._updateSelectedPage(e.detail.current);
+  },
+  bodyscroll:function(e){
+    console.log(e);
+  },
+  _updateSelectedPage(page) {
+    let {titles, stv, activeIndex} = this.data;
+    activeIndex = page;
+    this.setData({activeIndex: activeIndex})
+    stv.offset = stv.windowWidth*activeIndex;
+    this.setData({stv: this.data.stv})
+  },
+  handlerTabTap(e) {
+    this._updateSelectedPage(e.currentTarget.dataset.index);
+  }
+});
+</code></pre><p>  以下内容为页面样式：</p>
+<pre><code>.stv-container {
+  height: 100%
+}
+.withAnimate {
+  transition: all 100ms ease;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  perspective: 1000;
+}
+.stv-container .tab-bar {
+  position: fixed;
+  display: flex;
+  font-size: 30rpx;
+  color: #666666;
+  background-color: #fff;
+  z-index: 999;
+  top: 0;
+}
+.stv-container .tab-bar .tab-active {
+  color: #2d80ff;
+}
+.stv-container .tab-bar .tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 16rpx;
+  padding-bottom: 20rpx;
+}
+.stv-container .tab-bar .under-line {
+  position: absolute;
+  bottom: 0;
+  height: 6rpx;
+  background-color: #2d80ff;
+}
+</code></pre>
       
     </div>
     
@@ -344,15 +438,15 @@ const state = store.getState();
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/01/13/redux-hello-world-md/" rel="next" title="初识redux">
+                <i class="fa fa-chevron-left"></i> 初识redux
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/16/tab-view-md/" rel="prev" title="小程序TabView">
-                小程序TabView <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -466,7 +560,7 @@ const state = store.getState();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Redux？"><span class="nav-number">1.</span> <span class="nav-text">什么是Redux？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时用Redux？"><span class="nav-number">2.</span> <span class="nav-text">何时用Redux？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计思想"><span class="nav-number">3.</span> <span class="nav-text">设计思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux-的安装"><span class="nav-number">4.</span> <span class="nav-text">Redux 的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux的基本概念"><span class="nav-number">5.</span> <span class="nav-text">Redux的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Store"><span class="nav-number">5.1.</span> <span class="nav-text">Store</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#State"><span class="nav-number">5.2.</span> <span class="nav-text">State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action"><span class="nav-number">5.3.</span> <span class="nav-text">Action</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxml"><span class="nav-number">1.</span> <span class="nav-text">建立wxml</span></a></li></ol></div>
             
 
           </div>
