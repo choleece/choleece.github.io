@@ -304,23 +304,66 @@
         
           
             <h3 id="Let’s-Encrypt-Https-安全证书"><a href="#Let’s-Encrypt-Https-安全证书" class="headerlink" title="Let’s Encrypt Https 安全证书"></a>Let’s Encrypt Https 安全证书</h3><p>为了使你的网站支持https，你必须从Certificate Authority（CA）获得一个证书， Let’s Encrypt 就是一个CA。Let’s Encrypt部署起来很简单，使用电子子前哨基金会的Certbot就可以完成，下面就介绍利用Certbot完成https的部署。</p>
-<h3 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h3><ol>
-<li><p>打开Let’s Encrypt 官网</p>
-<p><a href="https://letsencrypt.org/getting-started/" target="_blank" rel="noopener">https://letsencrypt.org/getting-started/</a></p>
-</li>
-<li><p>选择其中的With Shell Access，点击Certbot来到Certbot官网，前两步也可直接点击Certbot官网</p>
-<p><a href="https://certbot.eff.org/lets-encrypt/" target="_blank" rel="noopener">https://certbot.eff.org/lets-encrypt/</a></p>
-</li>
-<li><p>根据自己的的服务器需求安装，我选的是Nginx + Centos7</p>
+<h3 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h3><p>1.打开Let’s Encrypt 官网</p>
+<p>  <a href="https://letsencrypt.org/getting-started/" target="_blank" rel="noopener">https://letsencrypt.org/getting-started/</a></p>
+<p>2.选择其中的With Shell Access，点击Certbot来到Certbot官网，前两步也可直接点击Certbot官网</p>
+<p>  <a href="https://certbot.eff.org/lets-encrypt/" target="_blank" rel="noopener">https://certbot.eff.org/lets-encrypt/</a></p>
+<p>3.根据自己的的服务器需求安装，我选的是Nginx + Centos7</p>
 <img src="/2018/03/19/certbot/certbot.jpg" title="选择服务器环境">
-</li>
-<li><p>为了立马就能看见效果，先保证nginx 80d端口已经开启。接下来按照官网的步骤走</p>
-<p>首先允许EPEL仓库<br>yum -y install yum-utils<br>yum-config-manager –enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional</p>
-</li>
-</ol>
-<p>安装certbot-nginx</p>
+<p>4.为了立马就能看见效果，先保证nginx 80端口已经开启。接下来按照官网的步骤走</p>
+<p>首先允许EPEL仓库</p>
+<pre><code>yum -y install yum-utils
+yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
+</code></pre><p>安装certbot-nginx</p>
 <pre><code>yum install certbot-nginx
-</code></pre>
+</code></pre><p>开始运行</p>
+<pre><code>certbot --nginx
+</code></pre><p>以上步骤是certbot官方网站上的操作步骤，进行这一步时，回出现错误，错误如下：</p>
+<img src="/2018/03/19/certbot/certbot_error.jpg" title="运行报错">
+<p>解决方案<br>  以上报错是python包没找到，下边介绍另外一种方法，利用pip进行安装</p>
+<p>  首先升级pip</p>
+<pre><code>pip install-upgrade pip
+</code></pre><p>  卸载yum安装的certbot和pyOpenSSL</p>
+<pre><code>yum remove certbot-nginx pyOpenSSL
+</code></pre><p>  pip安装certbot</p>
+<pre><code>pip install certbot-nginx
+</code></pre><p>  如果碰到了Python.h或者pyconfig.h找不到的错误，于是安装Python的devel包（不一定会出现）：</p>
+<pre><code>yum install -y python-devel
+</code></pre><p>  再次运行pip install certbot-nginx,如果提示找不到opensslv.h头文件，于是安装OpenSSL的devel包（不一定出现）：</p>
+<pre><code>yum install -y openssl-devel
+</code></pre><p>  如果pip install certbot-nginx 一次成功，则不需要运行上边两句命令。</p>
+<p>自动续期</p>
+<p>  let’s encrypt 证书默认的有效期是90天的时间，所以我们需要自动续期</p>
+<p>  先来添加一个service</p>
+<pre><code>$ sudo vim /etc/systemd/system/letsencrypt.service
+
+[Unit]
+Description=Let&apos;s Encrypt renewal
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot renew --quiet --agree-tos
+ExecStartPost=/bin/systemctl reload nginx.service
+</code></pre><p>  然后添加一个systemd timer来定时触发这个任务</p>
+<pre><code>$ sudo vim /etc/systemd/system/letsencrypt.timer
+[Unit]
+Description=Daily renewal of Let&apos;s Encrypt&apos;s certificates
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+</code></pre><p>  启动服务，开启timer</p>
+<pre><code>$ sudo systemctl enable letsencrypt.timer
+$ sudo systemctl start letsencrypt.timer
+</code></pre><p>参考链接：</p>
+<p>  <a href="https://letsencrypt.org/getting-started/" target="_blank" rel="noopener">https://letsencrypt.org/getting-started/</a></p>
+<p>  <a href="https://certbot.eff.org/lets-encrypt/centosrhel7-nginx" target="_blank" rel="noopener">https://certbot.eff.org/lets-encrypt/centosrhel7-nginx</a></p>
+<p>  <a href="https://tlanyan.me/certbot-importerror-pyopenssl-module-missing-required-functionality/" target="_blank" rel="noopener">https://tlanyan.me/certbot-importerror-pyopenssl-module-missing-required-functionality/</a></p>
+<p>  <a href="https://blog.nswebfrog.com/2017/12/14/letsencrypt-renew/" target="_blank" rel="noopener">https://blog.nswebfrog.com/2017/12/14/letsencrypt-renew/</a></p>
+
           
         
       
