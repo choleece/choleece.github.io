@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="小程序 TabView," />
+  <meta name="keywords" content="Java 设计模式," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
-<meta name="keywords" content="小程序 TabView">
+<meta name="description" content="设计模式  Java篇  GoF设计模式有23个，它们各具特色，每一个设计模式都为某一个可重复的设计问题提供了一套解决方案。根据它们的用途，设计模式可分为创建型（Creational），结构型（Structural）和行为型（Behavioral）三种，其中创建型模式主要用于描述如何创建对象，结构型模式主要用于描述如何实现类或对象的组合，行为型模式主要用于描述类或对象怎样交互以及怎样分配指责，在G">
+<meta name="keywords" content="Java 设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="小程序顶部TabView">
-<meta property="og:url" content="https://www.choleece.cn/2018/01/16/tab-view-md/index.html">
+<meta property="og:title" content="java_design_pattern.md">
+<meta property="og:url" content="https://www.choleece.cn/2018/03/22/java-design-pattern/index.html">
 <meta property="og:site_name" content="choleece">
-<meta property="og:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
+<meta property="og:description" content="设计模式  Java篇  GoF设计模式有23个，它们各具特色，每一个设计模式都为某一个可重复的设计问题提供了一套解决方案。根据它们的用途，设计模式可分为创建型（Creational），结构型（Structural）和行为型（Behavioral）三种，其中创建型模式主要用于描述如何创建对象，结构型模式主要用于描述如何实现类或对象的组合，行为型模式主要用于描述类或对象怎样交互以及怎样分配指责，在G">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-10T04:01:24.734Z">
+<meta property="og:image" content="https://www.choleece.cn/2018/03/22/java-design-pattern/design_principle.jpg">
+<meta property="og:updated_time" content="2018-03-22T15:29:44.033Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小程序顶部TabView">
-<meta name="twitter:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
+<meta name="twitter:title" content="java_design_pattern.md">
+<meta name="twitter:description" content="设计模式  Java篇  GoF设计模式有23个，它们各具特色，每一个设计模式都为某一个可重复的设计问题提供了一套解决方案。根据它们的用途，设计模式可分为创建型（Creational），结构型（Structural）和行为型（Behavioral）三种，其中创建型模式主要用于描述如何创建对象，结构型模式主要用于描述如何实现类或对象的组合，行为型模式主要用于描述类或对象怎样交互以及怎样分配指责，在G">
+<meta name="twitter:image" content="https://www.choleece.cn/2018/03/22/java-design-pattern/design_principle.jpg">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://www.choleece.cn/2018/01/16/tab-view-md/"/>
+  <link rel="canonical" href="https://www.choleece.cn/2018/03/22/java-design-pattern/"/>
 
 
 
 
 
-  <title>小程序顶部TabView | choleece</title>
+  <title>java_design_pattern.md | choleece</title>
   
 
 
@@ -233,7 +235,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/01/16/tab-view-md/">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/03/22/java-design-pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="choleece">
@@ -250,7 +252,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">小程序顶部TabView</h2>
+          <h2 class="post-title" itemprop="name headline">java_design_pattern.md</h2>
         
 
         <div class="post-meta">
@@ -262,8 +264,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T23:03:11+08:00">
-                2018-01-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T22:51:49+08:00">
+                2018-03-22
               </time>
             
 
@@ -300,123 +302,11 @@
       
 
       
-        <p>下面我们将利用小程序的scroll-view &amp; swipper制作tab-view</p>
-<h3 id="建立wxml"><a href="#建立wxml" class="headerlink" title="建立wxml"></a>建立wxml</h3><p>整个页面由顶部的标题栏+可滑动的body组成</p>
-<pre><code>&lt;view class=&quot;stv-container&quot;&gt;
-  &lt;view class=&quot;tab-bar&quot;&gt;
-    &lt;view wx:for=&quot;{{titles}}&quot; wx:key=&quot;unique&quot; data-index=&quot;{{index}}&quot; bindtap=&quot;handlerTabTap&quot; class=&quot;tab {{activeIndex==index?'tab-active':''}}&quot; style=&quot;width: {{stv.windowWidth/titles.length}}px&quot;&gt;
-        &lt;text&gt;{{item}}&lt;/text&gt;
-    &lt;/view&gt;
-    &lt;view style=&quot;width: {{stv.lineWidth}}px; left: {{stv.offset/titles.length}}px&quot; class=&quot;under-line {{!stv.tStart? 'withAnimate': ''}}&quot;&gt;&lt;/view&gt;
-  &lt;/view&gt;
-  &lt;view style=&quot;padding: 15px; height: 100%; margin-top: 30px; background-color: #fafafa&quot;&gt;
-    &lt;swiper duration=&quot;500&quot; bindchange=&quot;swiper&quot; current=&quot;{{activeIndex}}&quot; style=&quot;height: 100%&quot;&gt;
-        &lt;block wx:for=&quot;{{contents}}&quot; wx:key=&quot;*this&quot;&gt;
-            &lt;swiper-item&gt;
-                &lt;view style=&quot;height: 100%&quot;&gt;
-                    &lt;text&gt;{{contents[index]}}&lt;/text&gt;
-                &lt;/view&gt;
-            &lt;/swiper-item&gt;
-        &lt;/block&gt;
-    &lt;/swiper&gt;
-  &lt;/view&gt;
-&lt;/view&gt;
-</code></pre><h3 id="建立wxjs"><a href="#建立wxjs" class="headerlink" title="建立wxjs"></a>建立wxjs</h3><p>  以上代码是整个页面的布局， 可滑动的body我们用swiper组成，接下来是组成页面的数据滑动或者点击的方法，代码如下：</p>
-<pre><code>// pages/newMusic/index.js
-Page({
-  /**
-  * 页面的初始数据
-  */
-  data: {
-    activeIndex: 0,
-    stv: {
-      windowWidth: 0,
-      lineWidth: 0,
-      offset: 0,
-      tStart: false
-    },
-    titles: [&apos;文字一&apos;, &apos;文字二&apos;, &apos;文字三&apos;, &apos;文字四&apos;],
-    contents: [
-      &quot;小时候，我穿着老爸的直筒袜，想象着我在大西部论坛球馆，投中制胜球的样子，我就深深明白一件事，我爱上了篮球，我爱你如此深以致贡献所有， 我的思想和身体， 我的精神和灵魂， 六岁开始， 我就深爱着你&quot;,
-      &quot;从未想到过结束，我只看到自己，在这条路上奔跑到尽头，所以我不停地跑，在 每个球馆我全力奔跑，为你争取每次机会，你要求我拼尽所有，所以我奉上真心，因为这里包含太多，我带着汗水和伤痛，不仅因为挑战&quot;,
-      &quot;而是你在召唤我，我为你奉献所有，因为你也赠予我全部，因为篮球，我感到是一个鲜活的人，你让6岁孩子实现湖人梦，为此我将永远爱你，但我不能再迷恋你，这个赛季是我仅能给，心还能继续承受打击，意志也还能被碾磨&quot;,
-      &quot;但身体知道是时候说再见，我已经准备让你离开，现在只是想让你知道，我们能永远珍藏着每段时光，无论是好的，还是坏的，我们已贡献给彼此，所有的全部，无论接下来我会做什么，我都会是那个孩子，穿着老爸直筒袜，瞄准角落里的垃圾桶&quot;
-      ]
-    },
+        <h3 id="设计模式-Java篇"><a href="#设计模式-Java篇" class="headerlink" title="设计模式  Java篇"></a>设计模式  Java篇</h3><p>  GoF设计模式有23个，它们各具特色，每一个设计模式都为某一个可重复的设计问题提供了一套解决方案。根据它们的用途，设计模式可分为创建型（Creational），结构型（Structural）和行为型（Behavioral）三种，其中创建型模式主要用于描述如何创建对象，结构型模式主要用于描述如何实现类或对象的组合，行为型模式主要用于描述类或对象怎样交互以及怎样分配指责，在GoF设计模式中包含5种创建型设计模式，7种结构型设计模式和11种行为型设计模式。</p>
+<h3 id="面向对象设计原则"><a href="#面向对象设计原则" class="headerlink" title="面向对象设计原则"></a>面向对象设计原则</h3><p>  对于面向对象软件系统的设计，在支持可维护性的同时，提高系统的可复用性是一个至关重要的问题。如何同时提高一个软件系统的可维护性和可复用性是面向对象设计需要解决的核心问题之一。在面向对象设计中，可维护性的复用是以设计原则为基础的。每一个原则都蕴含一些面向对象设计的思想，可以从不同的角度提升一个软件结构的设计水平。面向对象设计原则为支持可维护性复用而诞生。</p>
+<p>  最常见的7中面向对象设计原则如下表所示：</p>
+  <img src="/2018/03/22/java-design-pattern/design_principle.jpg" title="常见设计原则">
 
-  /**
-  * 生命周期函数--监听页面加载
-  */
-  onLoad: function (options) {},
-
-  bodyChange: function(e) {
-    console.log(e.target.dataset.value);
-    this.setData({
-      activeIndex: e.target.dataset.value
-    });
-  },
-  swiper: function(e){
-    this._updateSelectedPage(e.detail.current);
-  },
-  bodyscroll:function(e){
-    console.log(e);
-  },
-  _updateSelectedPage(page) {
-    let {titles, stv, activeIndex} = this.data;
-    activeIndex = page;
-    this.setData({activeIndex: activeIndex})
-    stv.offset = stv.windowWidth*activeIndex;
-    this.setData({stv: this.data.stv})
-  },
-  handlerTabTap(e) {
-    this._updateSelectedPage(e.currentTarget.dataset.index);
-  }
-});
-</code></pre><h3 id="建立WXSS"><a href="#建立WXSS" class="headerlink" title="建立WXSS"></a>建立WXSS</h3><p>  以下内容为页面样式：</p>
-<pre><code>.stv-container {
-  height: 100%
-}
-.withAnimate {
-  transition: all 100ms ease;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  -moz-perspective: 1000;
-  -ms-perspective: 1000;
-  perspective: 1000;
-}
-.stv-container .tab-bar {
-  position: fixed;
-  display: flex;
-  font-size: 30rpx;
-  color: #666666;
-  background-color: #fff;
-  z-index: 999;
-  top: 0;
-}
-.stv-container .tab-bar .tab-active {
-  color: #2d80ff;
-}
-.stv-container .tab-bar .tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 16rpx;
-  padding-bottom: 20rpx;
-}
-.stv-container .tab-bar .under-line {
-  position: absolute;
-  bottom: 0;
-  height: 6rpx;
-  background-color: #2d80ff;
-}
-</code></pre>
       
     </div>
     
@@ -433,7 +323,7 @@ Page({
       
         <div class="post-tags">
           
-            <a href="/tags/小程序-TabView/" rel="tag"># 小程序 TabView</a>
+            <a href="/tags/Java-设计模式/" rel="tag"># Java 设计模式</a>
           
         </div>
       
@@ -446,8 +336,8 @@ Page({
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/13/redux-hello-world-md/" rel="next" title="初识redux">
-                <i class="fa fa-chevron-left"></i> 初识redux
+              <a href="/2018/03/19/certbot/" rel="next" title="https 安全证书部署 certbot let's encrypt">
+                <i class="fa fa-chevron-left"></i> https 安全证书部署 certbot let's encrypt
               </a>
             
           </div>
@@ -455,10 +345,6 @@ Page({
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/19/certbot/" rel="prev" title="https 安全证书部署 certbot let's encrypt">
-                https 安全证书部署 certbot let's encrypt <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -581,7 +467,7 @@ Page({
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxml"><span class="nav-number">1.</span> <span class="nav-text">建立wxml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxjs"><span class="nav-number">2.</span> <span class="nav-text">建立wxjs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立WXSS"><span class="nav-number">3.</span> <span class="nav-text">建立WXSS</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式-Java篇"><span class="nav-number">1.</span> <span class="nav-text">设计模式  Java篇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象设计原则"><span class="nav-number">2.</span> <span class="nav-text">面向对象设计原则</span></a></li></ol></div>
             
 
           </div>
