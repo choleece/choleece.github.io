@@ -232,6 +232,136 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/05/31/java-reference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="choleece">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="choleece">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/31/java-reference/" itemprop="url">java-reference</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-31T07:32:07+08:00">
+                2018-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Java-强引用、弱引用、软引用、虚引用的区别"><a href="#Java-强引用、弱引用、软引用、虚引用的区别" class="headerlink" title="Java 强引用、弱引用、软引用、虚引用的区别"></a>Java 强引用、弱引用、软引用、虚引用的区别</h3><h4 id="Java-中有如下四种引用类型"><a href="#Java-中有如下四种引用类型" class="headerlink" title="Java 中有如下四种引用类型"></a>Java 中有如下四种引用类型</h4><ol>
+<li>强引用 StrongReference</li>
+<li>弱引用 WeekReference</li>
+<li>软引用 SoftReference</li>
+<li>虚引用 PhantomReference</li>
+</ol>
+<p>强引用是我们在编程过程中最简单的引用，如String s = “abc”中变量s就是对字符串”abc”的强引用，任何被强引用指向的对象都不能被GC回收，这些对象都是在程序中需要的。弱引用使用java.lang.ref.WeakReference class表示，我们可以使用如下代码创建弱引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Counter counter = new Counter(); // strong reference</span><br><span class="line">WeakReference&lt;Counter&gt; wf = new WeakReference&lt;Counter&gt;(counter); // weak</span><br><span class="line">counter = null; // 现在counter 是可以被GC回收的</span><br></pre></td></tr></table></figure>
+<p>在给对象赋值null后，该对象就可以被GC回收。该对象不再有强引用，即使该对象有若引用，也会被GC立即回收，相反，如果该对象有软引用，counter不会被立即回收，除非JVM需要内存，Java中的软引用使用java.lang.ref.SoftReference类来表示，我们可以使用如下代码创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SoftReference soft = new SoftReference(counter);</span><br></pre></td></tr></table></figure></p>
+<p>鉴于软引用和弱引用这一区别，软引用更适用于缓存机制，弱引用更适用于存储元数据。另一个使用软引用的例子是，WeakHashMap，它有一个特点，map里边的key都被封装成弱引用，也就是说，一旦强引用被删除，WeakHashMap内部的弱引用就无法组织GC对该对象的回收。<br>虚引用是java.lang.ref包中的第三种引用，使用java.lang.ref.PhantomReference类来表示。拥有虚引用的对象可以在任何时候被GC回收，和其他形式类似，创建虚引用的形式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PhantomReference pr = new PhantomReference(counter);</span><br></pre></td></tr></table></figure></p>
+<p>一个对象的生命周期如下图所示：<br><img src="/2018/05/31/java-reference/afd3fcba0d61a802c4a8ae970059ee77.gif" title="对象生命周期"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/03/22/java-design-pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -943,7 +1073,7 @@ const state = store.getState();
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

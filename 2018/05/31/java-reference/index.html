@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="小程序 TabView," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,19 @@
 
 
 
-<meta name="description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
-<meta name="keywords" content="小程序 TabView">
+<meta name="description" content="Java 强引用、弱引用、软引用、虚引用的区别Java 中有如下四种引用类型 强引用 StrongReference 弱引用 WeekReference 软引用 SoftReference 虚引用 PhantomReference  强引用是我们在编程过程中最简单的引用，如String s = “abc”中变量s就是对字符串”abc”的强引用，任何被强引用指向的对象都不能被GC回收，这些对象都是在">
 <meta property="og:type" content="article">
-<meta property="og:title" content="小程序顶部TabView">
-<meta property="og:url" content="https://www.choleece.cn/2018/01/16/tab-view-md/index.html">
+<meta property="og:title" content="java-reference">
+<meta property="og:url" content="https://www.choleece.cn/2018/05/31/java-reference/index.html">
 <meta property="og:site_name" content="choleece">
-<meta property="og:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
+<meta property="og:description" content="Java 强引用、弱引用、软引用、虚引用的区别Java 中有如下四种引用类型 强引用 StrongReference 弱引用 WeekReference 软引用 SoftReference 虚引用 PhantomReference  强引用是我们在编程过程中最简单的引用，如String s = “abc”中变量s就是对字符串”abc”的强引用，任何被强引用指向的对象都不能被GC回收，这些对象都是在">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-10T04:01:24.734Z">
+<meta property="og:image" content="https://www.choleece.cn/2018/05/31/java-reference/afd3fcba0d61a802c4a8ae970059ee77.gif">
+<meta property="og:updated_time" content="2018-05-31T14:09:59.322Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小程序顶部TabView">
-<meta name="twitter:description" content="下面我们将利用小程序的scroll-view &amp;amp; swipper制作tab-view 建立wxml整个页面由顶部的标题栏+可滑动的body组成 &amp;lt;view class=&amp;quot;stv-container&amp;quot;&amp;gt;   &amp;lt;view class=&amp;quot;tab-bar&amp;quot;&amp;gt;     &amp;lt;view wx:for=&amp;quot;{{titles}}&amp;q">
+<meta name="twitter:title" content="java-reference">
+<meta name="twitter:description" content="Java 强引用、弱引用、软引用、虚引用的区别Java 中有如下四种引用类型 强引用 StrongReference 弱引用 WeekReference 软引用 SoftReference 虚引用 PhantomReference  强引用是我们在编程过程中最简单的引用，如String s = “abc”中变量s就是对字符串”abc”的强引用，任何被强引用指向的对象都不能被GC回收，这些对象都是在">
+<meta name="twitter:image" content="https://www.choleece.cn/2018/05/31/java-reference/afd3fcba0d61a802c4a8ae970059ee77.gif">
 
 
 
@@ -120,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://www.choleece.cn/2018/01/16/tab-view-md/"/>
+  <link rel="canonical" href="https://www.choleece.cn/2018/05/31/java-reference/"/>
 
 
 
 
 
-  <title>小程序顶部TabView | choleece</title>
+  <title>java-reference | choleece</title>
   
 
 
@@ -233,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/01/16/tab-view-md/">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/05/31/java-reference/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="choleece">
@@ -250,7 +251,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">小程序顶部TabView</h2>
+          <h2 class="post-title" itemprop="name headline">java-reference</h2>
         
 
         <div class="post-meta">
@@ -262,8 +263,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T23:03:11+08:00">
-                2018-01-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-31T07:32:07+08:00">
+                2018-05-31
               </time>
             
 
@@ -300,123 +301,18 @@
       
 
       
-        <p>下面我们将利用小程序的scroll-view &amp; swipper制作tab-view</p>
-<h3 id="建立wxml"><a href="#建立wxml" class="headerlink" title="建立wxml"></a>建立wxml</h3><p>整个页面由顶部的标题栏+可滑动的body组成</p>
-<pre><code>&lt;view class=&quot;stv-container&quot;&gt;
-  &lt;view class=&quot;tab-bar&quot;&gt;
-    &lt;view wx:for=&quot;{{titles}}&quot; wx:key=&quot;unique&quot; data-index=&quot;{{index}}&quot; bindtap=&quot;handlerTabTap&quot; class=&quot;tab {{activeIndex==index?'tab-active':''}}&quot; style=&quot;width: {{stv.windowWidth/titles.length}}px&quot;&gt;
-        &lt;text&gt;{{item}}&lt;/text&gt;
-    &lt;/view&gt;
-    &lt;view style=&quot;width: {{stv.lineWidth}}px; left: {{stv.offset/titles.length}}px&quot; class=&quot;under-line {{!stv.tStart? 'withAnimate': ''}}&quot;&gt;&lt;/view&gt;
-  &lt;/view&gt;
-  &lt;view style=&quot;padding: 15px; height: 100%; margin-top: 30px; background-color: #fafafa&quot;&gt;
-    &lt;swiper duration=&quot;500&quot; bindchange=&quot;swiper&quot; current=&quot;{{activeIndex}}&quot; style=&quot;height: 100%&quot;&gt;
-        &lt;block wx:for=&quot;{{contents}}&quot; wx:key=&quot;*this&quot;&gt;
-            &lt;swiper-item&gt;
-                &lt;view style=&quot;height: 100%&quot;&gt;
-                    &lt;text&gt;{{contents[index]}}&lt;/text&gt;
-                &lt;/view&gt;
-            &lt;/swiper-item&gt;
-        &lt;/block&gt;
-    &lt;/swiper&gt;
-  &lt;/view&gt;
-&lt;/view&gt;
-</code></pre><h3 id="建立wxjs"><a href="#建立wxjs" class="headerlink" title="建立wxjs"></a>建立wxjs</h3><p>  以上代码是整个页面的布局， 可滑动的body我们用swiper组成，接下来是组成页面的数据滑动或者点击的方法，代码如下：</p>
-<pre><code>// pages/newMusic/index.js
-Page({
-  /**
-  * 页面的初始数据
-  */
-  data: {
-    activeIndex: 0,
-    stv: {
-      windowWidth: 0,
-      lineWidth: 0,
-      offset: 0,
-      tStart: false
-    },
-    titles: [&apos;文字一&apos;, &apos;文字二&apos;, &apos;文字三&apos;, &apos;文字四&apos;],
-    contents: [
-      &quot;小时候，我穿着老爸的直筒袜，想象着我在大西部论坛球馆，投中制胜球的样子，我就深深明白一件事，我爱上了篮球，我爱你如此深以致贡献所有， 我的思想和身体， 我的精神和灵魂， 六岁开始， 我就深爱着你&quot;,
-      &quot;从未想到过结束，我只看到自己，在这条路上奔跑到尽头，所以我不停地跑，在 每个球馆我全力奔跑，为你争取每次机会，你要求我拼尽所有，所以我奉上真心，因为这里包含太多，我带着汗水和伤痛，不仅因为挑战&quot;,
-      &quot;而是你在召唤我，我为你奉献所有，因为你也赠予我全部，因为篮球，我感到是一个鲜活的人，你让6岁孩子实现湖人梦，为此我将永远爱你，但我不能再迷恋你，这个赛季是我仅能给，心还能继续承受打击，意志也还能被碾磨&quot;,
-      &quot;但身体知道是时候说再见，我已经准备让你离开，现在只是想让你知道，我们能永远珍藏着每段时光，无论是好的，还是坏的，我们已贡献给彼此，所有的全部，无论接下来我会做什么，我都会是那个孩子，穿着老爸直筒袜，瞄准角落里的垃圾桶&quot;
-      ]
-    },
+        <h3 id="Java-强引用、弱引用、软引用、虚引用的区别"><a href="#Java-强引用、弱引用、软引用、虚引用的区别" class="headerlink" title="Java 强引用、弱引用、软引用、虚引用的区别"></a>Java 强引用、弱引用、软引用、虚引用的区别</h3><h4 id="Java-中有如下四种引用类型"><a href="#Java-中有如下四种引用类型" class="headerlink" title="Java 中有如下四种引用类型"></a>Java 中有如下四种引用类型</h4><ol>
+<li>强引用 StrongReference</li>
+<li>弱引用 WeekReference</li>
+<li>软引用 SoftReference</li>
+<li>虚引用 PhantomReference</li>
+</ol>
+<p>强引用是我们在编程过程中最简单的引用，如String s = “abc”中变量s就是对字符串”abc”的强引用，任何被强引用指向的对象都不能被GC回收，这些对象都是在程序中需要的。弱引用使用java.lang.ref.WeakReference class表示，我们可以使用如下代码创建弱引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Counter counter = new Counter(); // strong reference</span><br><span class="line">WeakReference&lt;Counter&gt; wf = new WeakReference&lt;Counter&gt;(counter); // weak</span><br><span class="line">counter = null; // 现在counter 是可以被GC回收的</span><br></pre></td></tr></table></figure>
+<p>在给对象赋值null后，该对象就可以被GC回收。该对象不再有强引用，即使该对象有若引用，也会被GC立即回收，相反，如果该对象有软引用，counter不会被立即回收，除非JVM需要内存，Java中的软引用使用java.lang.ref.SoftReference类来表示，我们可以使用如下代码创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SoftReference soft = new SoftReference(counter);</span><br></pre></td></tr></table></figure></p>
+<p>鉴于软引用和弱引用这一区别，软引用更适用于缓存机制，弱引用更适用于存储元数据。另一个使用软引用的例子是，WeakHashMap，它有一个特点，map里边的key都被封装成弱引用，也就是说，一旦强引用被删除，WeakHashMap内部的弱引用就无法组织GC对该对象的回收。<br>虚引用是java.lang.ref包中的第三种引用，使用java.lang.ref.PhantomReference类来表示。拥有虚引用的对象可以在任何时候被GC回收，和其他形式类似，创建虚引用的形式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PhantomReference pr = new PhantomReference(counter);</span><br></pre></td></tr></table></figure></p>
+<p>一个对象的生命周期如下图所示：<br><img src="/2018/05/31/java-reference/afd3fcba0d61a802c4a8ae970059ee77.gif" title="对象生命周期"></p>
 
-  /**
-  * 生命周期函数--监听页面加载
-  */
-  onLoad: function (options) {},
-
-  bodyChange: function(e) {
-    console.log(e.target.dataset.value);
-    this.setData({
-      activeIndex: e.target.dataset.value
-    });
-  },
-  swiper: function(e){
-    this._updateSelectedPage(e.detail.current);
-  },
-  bodyscroll:function(e){
-    console.log(e);
-  },
-  _updateSelectedPage(page) {
-    let {titles, stv, activeIndex} = this.data;
-    activeIndex = page;
-    this.setData({activeIndex: activeIndex})
-    stv.offset = stv.windowWidth*activeIndex;
-    this.setData({stv: this.data.stv})
-  },
-  handlerTabTap(e) {
-    this._updateSelectedPage(e.currentTarget.dataset.index);
-  }
-});
-</code></pre><h3 id="建立WXSS"><a href="#建立WXSS" class="headerlink" title="建立WXSS"></a>建立WXSS</h3><p>  以下内容为页面样式：</p>
-<pre><code>.stv-container {
-  height: 100%
-}
-.withAnimate {
-  transition: all 100ms ease;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  -moz-perspective: 1000;
-  -ms-perspective: 1000;
-  perspective: 1000;
-}
-.stv-container .tab-bar {
-  position: fixed;
-  display: flex;
-  font-size: 30rpx;
-  color: #666666;
-  background-color: #fff;
-  z-index: 999;
-  top: 0;
-}
-.stv-container .tab-bar .tab-active {
-  color: #2d80ff;
-}
-.stv-container .tab-bar .tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 16rpx;
-  padding-bottom: 20rpx;
-}
-.stv-container .tab-bar .under-line {
-  position: absolute;
-  bottom: 0;
-  height: 6rpx;
-  background-color: #2d80ff;
-}
-</code></pre>
       
     </div>
     
@@ -431,12 +327,6 @@ Page({
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/小程序-TabView/" rel="tag"># 小程序 TabView</a>
-          
-        </div>
-      
 
       
       
@@ -446,8 +336,8 @@ Page({
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/13/redux-hello-world-md/" rel="next" title="初识redux">
-                <i class="fa fa-chevron-left"></i> 初识redux
+              <a href="/2018/03/22/java-design-pattern/" rel="next" title="设计模式 Java篇">
+                <i class="fa fa-chevron-left"></i> 设计模式 Java篇
               </a>
             
           </div>
@@ -455,10 +345,6 @@ Page({
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/19/certbot/" rel="prev" title="https 安全证书部署 certbot let's encrypt">
-                https 安全证书部署 certbot let's encrypt <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -581,7 +467,7 @@ Page({
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxml"><span class="nav-number">1.</span> <span class="nav-text">建立wxml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立wxjs"><span class="nav-number">2.</span> <span class="nav-text">建立wxjs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立WXSS"><span class="nav-number">3.</span> <span class="nav-text">建立WXSS</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-强引用、弱引用、软引用、虚引用的区别"><span class="nav-number">1.</span> <span class="nav-text">Java 强引用、弱引用、软引用、虚引用的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-中有如下四种引用类型"><span class="nav-number">1.1.</span> <span class="nav-text">Java 中有如下四种引用类型</span></a></li></ol></li></ol></div>
             
 
           </div>
