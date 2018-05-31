@@ -314,6 +314,7 @@
 <p>在给对象赋值null后，该对象就可以被GC回收。该对象不再有强引用，即使该对象有若引用，也会被GC立即回收，相反，如果该对象有软引用，counter不会被立即回收，除非JVM需要内存，Java中的软引用使用java.lang.ref.SoftReference类来表示，我们可以使用如下代码创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SoftReference soft = new SoftReference(counter);</span><br></pre></td></tr></table></figure></p>
 <p>鉴于软引用和弱引用这一区别，软引用更适用于缓存机制，弱引用更适用于存储元数据。另一个使用软引用的例子是，WeakHashMap，它有一个特点，map里边的key都被封装成弱引用，也就是说，一旦强引用被删除，WeakHashMap内部的弱引用就无法组织GC对该对象的回收。<br>虚引用是java.lang.ref包中的第三种引用，使用java.lang.ref.PhantomReference类来表示。拥有虚引用的对象可以在任何时候被GC回收，和其他形式类似，创建虚引用的形式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PhantomReference pr = new PhantomReference(counter);</span><br></pre></td></tr></table></figure></p>
 <p>一个对象的生命周期如下图所示：<br><img src="/2018/05/31/java-reference/afd3fcba0d61a802c4a8ae970059ee77.gif" title="对象生命周期"></p>
+<p>原文出处：<a href="http://www.importnew.com/10866.html" target="_blank" rel="noopener">http://www.importnew.com/10866.html</a></p>
 
           
         
