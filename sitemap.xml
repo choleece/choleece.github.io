@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.choleece.cn/2018/03/19/certbot/</loc>
+    
+    <lastmod>2018-06-23T08:32:12.566Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.choleece.cn/2018/06/03/reflection/</loc>
     
     <lastmod>2018-06-03T03:56:01.239Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://www.choleece.cn/2018/03/22/java-design-pattern/</loc>
     
     <lastmod>2018-03-22T15:38:55.667Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.choleece.cn/2018/03/19/certbot/</loc>
-    
-    <lastmod>2018-03-19T14:57:21.784Z</lastmod>
     
   </url>
   
