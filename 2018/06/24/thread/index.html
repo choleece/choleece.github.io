@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="choleece">
 <meta property="og:description" content="1. 什么是线程？线程是操作系统能够进行运算调度的最小单位，它包含在进程中，是进程中的实际运作单位，可以使用多线程对运算进行提速。 2. 什么是线程安全和线程不安全？通俗的说：加锁就是线程安全的，不加锁就是线程不安全的。 线程安全线程安全：就是多线程访问时，采用加锁机制，当一个线程访问该类的某个数据时，进行保护，其他线程不能进行访问，知道该线程读取完，其他线程才可使用。不会出现数据不一致或者数据污">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-24T16:11:28.652Z">
+<meta property="og:updated_time" content="2018-06-24T23:50:46.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程知识面试汇总">
 <meta name="twitter:description" content="1. 什么是线程？线程是操作系统能够进行运算调度的最小单位，它包含在进程中，是进程中的实际运作单位，可以使用多线程对运算进行提速。 2. 什么是线程安全和线程不安全？通俗的说：加锁就是线程安全的，不加锁就是线程不安全的。 线程安全线程安全：就是多线程访问时，采用加锁机制，当一个线程访问该类的某个数据时，进行保护，其他线程不能进行访问，知道该线程读取完，其他线程才可使用。不会出现数据不一致或者数据污">
@@ -330,7 +330,65 @@
 <li>Java堆为了便于更好堆回收和分配内存，可以细分为：新生代和老年代；在细致一点有Eden空间、From Survivor空间、To Survivor区。<br> a. 新生代：包括Eden区、From Survivor区、To Survivor区、系统默认大小Eden : Survivor = 8 : 1;<br> b. 老年代：在年轻代经历了N次垃圾回收后仍然存活的对象，就会被放到老年代中，因此，可以认为老年代中存放的都是一些生命周期较长的对象。</li>
 <li>Survivor空间等Java堆可以处在物理上不连续的内存共建中，只要逻辑上是连续的即可。</li>
 </ol>
-<h4 id="据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。"><a href="#据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。" class="headerlink" title="据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。"></a>据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。</h4>
+<h5 id="据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。"><a href="#据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。" class="headerlink" title="据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。"></a>据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。</h5><p>本地方法栈</p>
+<ul>
+<li>可通过参数 栈容量可由-Xss设置</li>
+</ul>
+<ol>
+<li>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务。</li>
+<li>本地方法栈则是为虚拟机使用到的Native方法服务。有的虚拟机直接就把本地方法栈和虚拟机栈合二为一。</li>
+</ol>
+<p>方法区（Method Area）<br>可通过参数-XX:MaxPermSize设置</p>
+<ol>
+<li>线程共享内粗区域，用于存储已被虚拟机加载的类信息、常量、静态变量，即编译器编译后的代码，方法区也称为持久代（Permanent Generation）</li>
+<li>虽然Java虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫Non-Heap（非堆），目的应该是与Java堆区分开来</li>
+<li>如何实现方法区，属于虚拟机的实现细节，不受虚拟机约束规范。</li>
+<li>方法去主要方法Java类定义信息，与垃圾回收关系不大，方法区可以选择不实现垃圾回收，但并不是没有垃圾回收。</li>
+<li>方法区域的内存回收目标主要是针对常量池的回收和对类型的卸载。</li>
+<li>运行时常量，也是方法区的一部分，虚拟机加载class后把常量池中的数据放入运行时常量池。</li>
+</ol>
+<p>运行时常量池</p>
+<p>JDK1.6之前字符串常量池位于方法区之中。JDK1.7字符串常量池已经被挪到堆之中。<br>可通过参数-XX:PermSize和–XX:MaxPermSize设置</p>
+<ul>
+<li>常量池（Constant Pool ）：常量池数据编译期被确定，是Class文件中的一部分。存储了类、方法、接口中的常量，当然也包括字符串常量。</li>
+<li>字符串池/字符串常量池（String Pool）/（String Constant Pool）：是常量池中一部分，存储编译期类中产生的字符串类型数据。</li>
+<li>运行时常量池（Runtime Constant Pool）:方法区的一部分，所有线程共享。虚拟机加载Class后把常量池中的数据放入到运行时常量池。常量池：可以理解为Class文件之中的资源仓库，它是Class文件结构中与其他项目资源关联最多的数据类型。</li>
+</ul>
+<ol>
+<li>常量池中主要存放两大类常量：字面量（Literal）和符号饮用（Symbolic Reference）。</li>
+<li>字面量：文本字符串、声明为final的常量值等。</li>
+<li>符号引用：类和接口的完全限定名（Full Qualified Name）、字段的名称和描述符（Descriptor）、方法的名称和描述符。</li>
+</ol>
+<p>直接内存</p>
+<p>可通过-XX:MaxDirectMemory指定，如果不指定，则默认与Java堆的最大值（-Xmx）一样。</p>
+<ul>
+<li>直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，但是这部分内存也被频繁的使用，而且也可能导致OutOfMemoryError异常出现。</li>
+</ul>
+<p>总结的简单一点<br>Java堆（Java Heap）<br>可通过参数-Xms 和 -Xmx设置</p>
+<ol>
+<li>Java堆是被所有线程共享，是Java虚拟机所管理的内存中最大的一块，Java堆在虚拟机启动后创建</li>
+<li>Java堆唯一的目的是存放对象实例，几乎所有的对象实例和数组都放在这里</li>
+<li><p>Java堆为了更好的回收和分配内存，可以细分为新生代和老年代；再细致一点分为Eden空间，From Survivor空间，To Survivor空间。</p>
+<ul>
+<li>新生代：包括Eden区、From Survivor区、To Survivor区，系统默认大小为Eden:Survivor=8：1。</li>
+<li>老年代：在年轻代中经历了N次垃圾回收后仍然存活的对象，就会被放到老年代中。因此，可以认为老年代中存放的都是一些生命周期较长的对象。</li>
+</ul>
+</li>
+</ol>
+<p>Java虚拟机栈（Stack）<br>可通过参数栈帧是方法运行期的基础数据结构，栈容量可由-Xss设置</p>
+<ol>
+<li>Java虚拟机栈是线程私有的，它的生命周期与线程相同。</li>
+<li>每一个方法被调用直至执行完成的过程，就对应着一个栈帧在虚拟机中从入栈到出栈的过程。</li>
+<li>虚拟机栈是执行Java方法的内存模型（也就是字节码）服务：每个方法在执行的同时都会创建一个栈帧，用于存储局部变量表、操作数栈、动态链接、方法出口等信息</li>
+</ol>
+<p>方法区（Method Area）<br>可通过-XX:MaxPermSize设置</p>
+<ol>
+<li>线程共享内存区域，用于已被虚拟机加载的类信息、常量、静态变量，即编译器编译后的代码，方法区也被称为持久代（Permanent Generation）</li>
+<li>方法区主要存放Java类定义信息，与垃圾回收关系不大，方法区可以现在不实现垃圾回收，但不是没有垃圾回收。</li>
+<li>方法区域的内存回收目标只要是针对常量池和堆类型的卸载。</li>
+<li>运行时常量池，也是方法区的一部分，虚拟机加载Class后把常量池中国呢的数据放入运行时常量池。</li>
+</ol>
+
       
     </div>
     
@@ -485,7 +543,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是线程？"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是线程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-什么是线程安全和线程不安全？"><span class="nav-number">2.</span> <span class="nav-text">2. 什么是线程安全和线程不安全？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程安全"><span class="nav-number">2.1.</span> <span class="nav-text">线程安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程不安全"><span class="nav-number">2.2.</span> <span class="nav-text">线程不安全</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-什么是自旋锁？"><span class="nav-number">3.</span> <span class="nav-text">3. 什么是自旋锁？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自旋锁需要注意："><span class="nav-number">3.1.</span> <span class="nav-text">自旋锁需要注意：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-什么是Java内存模型？"><span class="nav-number">4.</span> <span class="nav-text">4. 什么是Java内存模型？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java的JVM的内存可分为3个区：堆（heap）、栈-stack-和方法区（method）"><span class="nav-number">4.1.</span> <span class="nav-text">Java的JVM的内存可分为3个区：堆（heap）、栈(stack)和方法区（method）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。"><span class="nav-number">4.2.</span> <span class="nav-text">据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是线程？"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是线程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-什么是线程安全和线程不安全？"><span class="nav-number">2.</span> <span class="nav-text">2. 什么是线程安全和线程不安全？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程安全"><span class="nav-number">2.1.</span> <span class="nav-text">线程安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程不安全"><span class="nav-number">2.2.</span> <span class="nav-text">线程不安全</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-什么是自旋锁？"><span class="nav-number">3.</span> <span class="nav-text">3. 什么是自旋锁？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自旋锁需要注意："><span class="nav-number">3.1.</span> <span class="nav-text">自旋锁需要注意：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-什么是Java内存模型？"><span class="nav-number">4.</span> <span class="nav-text">4. 什么是Java内存模型？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java的JVM的内存可分为3个区：堆（heap）、栈-stack-和方法区（method）"><span class="nav-number">4.1.</span> <span class="nav-text">Java的JVM的内存可分为3个区：堆（heap）、栈(stack)和方法区（method）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。"><span class="nav-number">4.1.1.</span> <span class="nav-text">据Java虚拟机规范规定，当方法区取法满足内存分配需求时，将抛出OutOfMemoryError异常。</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
