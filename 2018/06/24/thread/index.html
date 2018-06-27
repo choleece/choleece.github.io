@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="choleece">
 <meta property="og:description" content="1. 什么是线程？线程是操作系统能够进行运算调度的最小单位，它包含在进程中，是进程中的实际运作单位，可以使用多线程对运算进行提速。 2. 什么是线程安全和线程不安全？通俗的说：加锁就是线程安全的，不加锁就是线程不安全的。 线程安全线程安全：就是多线程访问时，采用加锁机制，当一个线程访问该类的某个数据时，进行保护，其他线程不能进行访问，知道该线程读取完，其他线程才可使用。不会出现数据不一致或者数据污">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-26T23:47:08.805Z">
+<meta property="og:updated_time" content="2018-06-27T13:56:01.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程知识面试汇总">
 <meta name="twitter:description" content="1. 什么是线程？线程是操作系统能够进行运算调度的最小单位，它包含在进程中，是进程中的实际运作单位，可以使用多线程对运算进行提速。 2. 什么是线程安全和线程不安全？通俗的说：加锁就是线程安全的，不加锁就是线程不安全的。 线程安全线程安全：就是多线程访问时，采用加锁机制，当一个线程访问该类的某个数据时，进行保护，其他线程不能进行访问，知道该线程读取完，其他线程才可使用。不会出现数据不一致或者数据污">
@@ -547,6 +547,28 @@
 <p>为ThreadLocal指定泛型类型</p>
 <pre><code>public static ThreadLocal&lt;String&gt; myThreadLocal = new ThreadLocal&lt;String&gt;();
 </code></pre><p> 我们可以创建一个执行泛型的ThreadLocal对象，这样我们就不需要每次对使用get()方法返回的值作强制类型转换了。</p>
+<p> ThreadLocal的介绍</p>
+<p> ThreadLocal是一个线程的内部存储类，可以在每个线程的内部存储数据，当某个数据的作用域应该对应线程的时候就应该使用它；</p>
+<p> 而是当某个很复杂的逻辑下的对象传递，需要在线程这个作用域内贯穿其中，用ThreadLocal可以避免这个创建多个静态类。</p>
+<p> 当你创建一个ThreadLocal对象后，注意，是一个对象，你在不同线程中去访问它的值是可以不一样滴，并且是和线程相关联的。</p>
+<p> 它的实现原理其实比较简单，每个线程中都会维护一个ThreadLocalMap，当在某个线程中访问时，会取出这个线程自己的Map并且用当前ThreadLocal对象作索引来取出相对应的value值，从而达到不同线程不同值的效果。</p>
+<p> 实现原理</p>
+<ol>
+<li><p>每个Thread对象内部都维护来一个ThreadLocalMap这样一个ThreadLocal的Map，可以存放若干个ThreadLocal。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadLocal.ThreadLocalMap threadLocals = null;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当我们在调用get()方法的时候，先获取当前线程，然后获取到当前线程的ThreadLocalMap对象，如果非空，那么取出ThreadLocal的value,否则进行初始化，初始化就是将initialValue的值set到ThreadLocal中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public T get() &#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null) &#123;</span><br><span class="line">        THreadLocalMap.Entry e = map.getEntry(this);</span><br><span class="line">        if (e != null) &#123;</span><br><span class="line">            return (T) e.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当我们调用set()方法的时候，很常规，就是将值设置进ThreadLocal中。</p>
+</li>
+<li><p>ThreadLocalMap里面存储的Entry对象本质上是一个WeakReference<threadlocal>。</threadlocal></p>
+<p>也就是说，ThreadLocalMap里面存储的对象本质是一个对ThreadLocal对象的弱引用，该ThreadLocal随时可能会被回收。</p>
+<p>即导致ThreadLocalMap里面对应的value的key是null。我们需要把这样的Entry给清除掉，不要让他们占坑，避免内存泄漏。</p>
+<p>那为什么需要弱引用呢？</p>
+<p>因为线程的声明周期是长于ThreadLocal对象的，当此对象不再需要的时候如果线程中还持有它的引用势必也会产生内存泄漏的问题，所以自然应该是用弱引用来进行key的保护。</p>
+</li>
+</ol>
 <h3 id="15-ThreadPool-线程池-用法与优势？"><a href="#15-ThreadPool-线程池-用法与优势？" class="headerlink" title="15. ThreadPool(线程池)用法与优势？"></a>15. ThreadPool(线程池)用法与优势？</h3><p> 为什么要用线程池：</p>
 <ol>
 <li><p>减少创建和销毁线程的次数，每个工作线程可以被重复利用，可执行多个任务。</p>
