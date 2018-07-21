@@ -232,6 +232,146 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/07/21/maven-dependency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="choleece">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="choleece">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/21/maven-dependency/" itemprop="url">关于构建maven多模块 dependency dependencyManagment 的用法</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-21T12:18:14+08:00">
+                2018-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="dependency-dependencyManagment-在maven多模块中的使用"><a href="#dependency-dependencyManagment-在maven多模块中的使用" class="headerlink" title="dependency dependencyManagment 在maven多模块中的使用"></a>dependency dependencyManagment 在maven多模块中的使用</h3><p>dependency在单module中用法，在这就不再赘述，网上有很多资源介绍dependency的。</p>
+<p>dependencyManagment 应用场景</p>
+<p>当我们的项目模块（即有多个module）的时候，各模块中间会有很多的基础包是重复的，为了项目的正确运行，必须让所有的子项目使用依赖项的统一版本，必须确保应用的各个项目的依赖项和版本一直，才能保证测试和发布的是相同的结果。</p>
+<p>在顶层的pom文件中，我们会抽象出一些各子模块会公用的jar包，这个时候我们用dependencyManagement来管理，让子项目中引用一个依赖而不用显示的列出版本号。Maven会沿着父子层次向上走，知道找到一个拥有dependencyManagement元素的项目，然后它就会使用在这个dependencyManagement元素中制定的版本号。</p>
+<p>下面，我们将举例子来说明这个问题：<br>项目结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">zheng-boot</span><br><span class="line">         |</span><br><span class="line">          zheng-boot-common</span><br><span class="line">         |</span><br><span class="line">          zheng-boot-cms</span><br><span class="line">                        |</span><br><span class="line">                         zheng-boot-cms-admin</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，这个项目大概有三层，zheng-boot作为顶级project，zheng-boot下又有zheng-boot-common 和 zheng-boot-cms两个模块，然后zheng-boot-cms下边又有zheng-boot-cms-admin一个子模块。</p>
+<p>先将各项目的pom.xml的代码贴出来，给大家看看，然后照着pom.xml给大家讲解</p>
+<p>zheng-boot的pom.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&lt;-- zheng-boot pom.xml --&gt;</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">  &lt;groupId&gt;cn.choleece&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;zheng-boot&lt;/artifactId&gt;</span><br><span class="line">  &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line"></span><br><span class="line">  &lt;properties&gt;</span><br><span class="line">      &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">      &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">      &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</span><br><span class="line">      &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</span><br><span class="line">      &lt;maven.compiler.compilerVersion&gt;1.8&lt;/maven.compiler.compilerVersion&gt;</span><br><span class="line">      &lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">      &lt;spring.version&gt;5.0.7.RELEASE&lt;/spring.version&gt;</span><br><span class="line">  &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">  &lt;parent&gt;</span><br><span class="line">      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;2.0.3.RELEASE&lt;/version&gt;</span><br><span class="line">      &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">  &lt;/parent&gt;</span><br><span class="line"></span><br><span class="line">  &lt;modules&gt;</span><br><span class="line">      &lt;module&gt;zheng-boot-common&lt;/module&gt;</span><br><span class="line">      &lt;module&gt;zheng-boot-cms&lt;/module&gt;</span><br><span class="line">  &lt;/modules&gt;</span><br><span class="line"></span><br><span class="line">  &lt;dependencyManagement&gt;</span><br><span class="line">      &lt;dependencies&gt;</span><br><span class="line"></span><br><span class="line">          &lt;dependency&gt;</span><br><span class="line">              &lt;groupId&gt;cn.choleece.zhengboot&lt;/groupId&gt;</span><br><span class="line">              &lt;artifactId&gt;zheng-boot-common&lt;/artifactId&gt;</span><br><span class="line">              &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">          &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">          &lt;dependency&gt;</span><br><span class="line">              &lt;groupId&gt;cn.choleece.zhengboot&lt;/groupId&gt;</span><br><span class="line">              &lt;artifactId&gt;zheng-boot-cms&lt;/artifactId&gt;</span><br><span class="line">              &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">          &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">          &lt;dependency&gt;</span><br><span class="line">              &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">              &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">              &lt;version&gt;2.0.3.RELEASE&lt;/version&gt;</span><br><span class="line">          &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">          &lt;dependency&gt;</span><br><span class="line">              &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">              &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">              &lt;version&gt;1.1.10&lt;/version&gt;</span><br><span class="line">          &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">      &lt;/dependencies&gt;</span><br><span class="line">  &lt;/dependencyManagement&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<p>zheng-boot-common的pom.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">  &lt;-- zheng-boot-common pom.xml --&gt;</span><br><span class="line"></span><br><span class="line">  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;zheng-boot&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;cn.choleece&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">    &lt;groupId&gt;cn.choleece.zhengboot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;zheng-boot-common&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">        &lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;!--generate ids using snowflake--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.relops&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;snowflake&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.1&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<p>zheng-boot-cms的pom.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">  &lt;-- zheng-boot-cms pom.xml --&gt;</span><br><span class="line"></span><br><span class="line">  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;artifactId&gt;zheng-boot&lt;/artifactId&gt;</span><br><span class="line">        &lt;groupId&gt;cn.choleece&lt;/groupId&gt;</span><br><span class="line">        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">        &lt;relativePath&gt;../pom.xml&lt;/relativePath&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">    &lt;groupId&gt;cn.choleece.zhengboot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;zheng-boot-cms&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">    &lt;name&gt;zheng-boot-cms&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</span><br><span class="line">        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</span><br><span class="line">        &lt;maven.compiler.compilerVersion&gt;1.8&lt;/maven.compiler.compilerVersion&gt;</span><br><span class="line">        &lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">    &lt;modules&gt;</span><br><span class="line">        &lt;module&gt;zheng-boot-cms-admin&lt;/module&gt;</span><br><span class="line">    &lt;/modules&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line"></span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;cn.choleece.zhengboot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;zheng-boot-common&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencyManagement&gt;</span><br><span class="line">        &lt;dependencies&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;1.2.47&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">        &lt;/dependencies&gt;</span><br><span class="line">    &lt;/dependencyManagement&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<p>zheng-boot-cms-admin 的pom.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">  &lt;-- zheng-boot-cms-admin pom.xml --&gt;</span><br><span class="line"></span><br><span class="line">  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">	&lt;parent&gt;</span><br><span class="line">		&lt;artifactId&gt;zheng-boot-cms&lt;/artifactId&gt;</span><br><span class="line">		&lt;groupId&gt;cn.choleece.zhengboot&lt;/groupId&gt;</span><br><span class="line">		&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">		&lt;relativePath&gt;../pom.xml&lt;/relativePath&gt;</span><br><span class="line">	&lt;/parent&gt;</span><br><span class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">	&lt;groupId&gt;cn.choleece.zhengboot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;zheng-boot-cms-admin&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">	&lt;name&gt;zheng-boot-cms-admin&lt;/name&gt;</span><br><span class="line">	&lt;description&gt;zheng-boot-cms-admin&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">	&lt;properties&gt;</span><br><span class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">	&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">	&lt;dependencies&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">	&lt;build&gt;</span><br><span class="line">		&lt;plugins&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">		&lt;/plugins&gt;</span><br><span class="line">	&lt;/build&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<p>下面我们来看一下，分析一下各module的jar都是来自哪里，弄清了来源，基本也就理解了。</p>
+<p>先看最底层的，zheng-boot-cms-admin</p>
+<p>我们可以看到，在zheng-boot-cms-admin这个module里，有druid 和 fastjson，我们首先看druid，在本pom.xml里，druid没有版本号，则是引用的父pom，admin的父pom里，我们会看到dependencyManagement里有定义druid，所以admin里直接引用的就是cms pom.xml里的版本号，再看fastjson，同样的没有版本号，往上追溯到cms的pom，发现并没有fastjson的定义，接着我们看admin的父pom zheng-boot的dependencyManagement里有定义fastjson，同样是可以引用到的，也就是它会一直往上追溯，直到找到为止。但是需要注意到是，在cms的dependencyManagement里不能引用zheng-boot dependencyManagement的包，否则在子module引用的时候会发现找不到版本号。</p>
+<p>我们再看zheng-boot-common里的snowflake，我们在admin项目里是可以直接用的，证明snowflag的jar包已经加载到了amdin的classpath下，我们来看下这是什么样的一个过程。当我们在admin项目里用snowflake的时候，admin会去找自己pom下的jar包，发现没有pom里没有声明，然后继续寻找admin的父pom cms，发现cms 的pom 里也没有明确声明snowflake，但是引用里common，然后common里声明了snowflake，所以admin可以直接使用。</p>
+<p>看到上边，我想大家已经清楚了各项目模块下的jar包的来源，也会发现dependency 和 dependencyManagement的区别，它两一个明显的区别就是，如果在父pom的dependency引入的jar包，那么会直接“继承”到子pom里，在子pom里不用显示的引用就可以使用；如果是在父pom的dependencyManagement引入的jar包，则需要在子pom里需要显示的引用，只不过不需要写version。另外，dependencyManagement不支持“继承”，即在zheng-boot 的dependencyManagement里定义的jar包，不能在zheng-boot-cms的dependencyManagement里使用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/06/24/thread/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1683,7 +1823,7 @@ const state = store.getState();
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1696,7 +1836,7 @@ const state = store.getState();
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
