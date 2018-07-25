@@ -232,6 +232,145 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/07/25/iterator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="choleece">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="choleece">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/25/iterator/" itemprop="url">iterator</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-25T23:35:57+08:00">
+                2018-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Iterator-和-Iterable-迭代器"><a href="#Iterator-和-Iterable-迭代器" class="headerlink" title="Iterator 和 Iterable 迭代器"></a>Iterator 和 Iterable 迭代器</h3><p>首先看名字我们就大致能发现这两个东西的不同，一个是迭代器，一个是可迭代的，下面我们来了解下这两个东西</p>
+<h4 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h4><p>Iterator是一个接口，部分源码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterator&lt;E&gt; &#123;</span><br><span class="line">    // 判断集合中是否还有元素，如果还有元素可以迭代，就返回true</span><br><span class="line">    boolean hasNext();</span><br><span class="line"></span><br><span class="line">    // 返回迭代的下一个原色，注意：如果没有下一个元素时，调用next()会抛出NoSuchElementException</span><br><span class="line">    E next();</span><br><span class="line"></span><br><span class="line">    // 从迭代器指向的结合中移除地带其返回的最后一个元素，这个也是迭代器常用的方法，在迭代的过程中去掉删除掉某个元素</span><br><span class="line">    // 从这个方法可以看出，interface的方法是可以有方法体的（从JDK1.8后开始支持，方法前必须用static 或者 default修饰，）</span><br><span class="line">    default void remove() &#123;</span><br><span class="line">        throw new UnsupportedOperationException(&quot;remove&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>迭代器的出现，是为了更好的处理集合中的元素，屏蔽集合的内部细节。</p>
+<p>迭代器遍历：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    List list = new ArrayList();</span><br><span class="line">    list.add(1);</span><br><span class="line">    list.add(2);</span><br><span class="line">    list.add(3);</span><br><span class="line">    list.add(4);</span><br><span class="line">    list.add(5);</span><br><span class="line">    list.add(6);</span><br><span class="line">    Iterator iterator = list.iterator();</span><br><span class="line">    while (iterator.hasNext()) &#123;</span><br><span class="line">        System.out.println(iterator.next());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述例子为迭代器简单的遍历过程，下面我们来看下删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    List list = new ArrayList();</span><br><span class="line">    list.add(1);</span><br><span class="line">    list.add(2);</span><br><span class="line">    list.add(3);</span><br><span class="line">    list.add(4);</span><br><span class="line">    list.add(5);</span><br><span class="line">    list.add(6);</span><br><span class="line">    Iterator iterator = list.iterator();</span><br><span class="line">    while (iterator.hasNext()) &#123;</span><br><span class="line">        System.out.println(iterator.next());</span><br><span class="line">        itetator.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述方法会正常执行，执行完后，list会变成空集合，再看看下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    List list = new ArrayList();</span><br><span class="line">    list.add(1);</span><br><span class="line">    list.add(2);</span><br><span class="line">    list.add(3);</span><br><span class="line">    list.add(4);</span><br><span class="line">    list.add(5);</span><br><span class="line">    list.add(6);</span><br><span class="line">    Iterator iterator = list.iterator();</span><br><span class="line">    while (iterator.hasNext()) &#123;</span><br><span class="line">        itetator.remove();</span><br><span class="line">        System.out.println(iterator.next());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码会抛出IllegalStateException，调用remove之前没有调用next是不合法的。</p>
+<h4 id="Iterable"><a href="#Iterable" class="headerlink" title="Iterable"></a>Iterable</h4><p>Iterable也是一个接口，表明继承了Iterable的类是可迭代的，并且支持增强for循环</p>
+<p>Iterable的部分源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterable&lt;T&gt; &#123;</span><br><span class="line">    Iterator&lt;T&gt; iterator();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继承了Iterable的类是可以返回一个Iterator迭代器的，也就包含了Iterator的操作行为。</p>
+<h3 id="ListIterator"><a href="#ListIterator" class="headerlink" title="ListIterator"></a>ListIterator</h3><p>我们查看ListIterator的源码可以看到，ListIterator是继承Iterator的，所以Iterator有的功能ListIterator都有，ListIterator的部分源码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public interface ListIterator&lt;E&gt; extends Iterator&lt;E&gt; &#123;</span><br><span class="line">    boolean hasNext();</span><br><span class="line"></span><br><span class="line">    E next();</span><br><span class="line"></span><br><span class="line">    boolean hasPrevious();</span><br><span class="line"></span><br><span class="line">    E previous();</span><br><span class="line"></span><br><span class="line">    int nextIndex();</span><br><span class="line"></span><br><span class="line">    int previousIndex();</span><br><span class="line"></span><br><span class="line">    void remove();</span><br><span class="line"></span><br><span class="line">    void set(E e);</span><br><span class="line"></span><br><span class="line">    void add(E e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以从源码可以看到，ListIterator里同样也有next()，hasNext()，remove()方法，但是同时，我们可以看到ListIterator也有previous()，hasPrevious()等方法，所以我们可以得知Iterator是一个单向的迭代，而ListIterator是一个双向的。<br>另外，Iterator还有其他的几个方法，我们下边来分别介绍下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    List list = new ArrayList();</span><br><span class="line">    list.add(1);</span><br><span class="line">    list.add(2);</span><br><span class="line">    list.add(3);</span><br><span class="line">    list.add(4);</span><br><span class="line">    list.add(5);</span><br><span class="line">    list.add(6);</span><br><span class="line"></span><br><span class="line">    ListIterator li = list.listIterator();</span><br><span class="line"></span><br><span class="line">    System.out.println(li.previousIndex());</span><br><span class="line"></span><br><span class="line">    // 向后遍历</span><br><span class="line">    while (li.hasNext()) &#123;</span><br><span class="line">        System.out.println(li.next());</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(&quot;向后遍历完，接着执行set 0&quot;);</span><br><span class="line">    li.set(0);</span><br><span class="line">    System.out.println(&quot;set 0 完毕，执行next index&quot;);</span><br><span class="line">    System.out.println(li.nextIndex());</span><br><span class="line">    System.out.println(&quot;next index 完毕，执行add&quot;);</span><br><span class="line">    li.add(7);</span><br><span class="line">    System.out.println(&quot;add 0 完毕，执行next index&quot;);</span><br><span class="line">    System.out.println(li.nextIndex());</span><br><span class="line">    System.out.println(&quot;next index 完毕，执行previous index&quot;);</span><br><span class="line">    System.out.println(li.previousIndex());</span><br><span class="line">    while (li.hasPrevious()) &#123;</span><br><span class="line">        System.out.println(li.previous());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行上述结果，会发现，在刚开始的时候，执行previousIndex，返回的是-1,此时迭代“指针”还处于初始位置，如果此时执行set操作会报错，在后边的set方法中，set进去的值会替换掉当前位置的值，如果是add，则是添加一个值到list当中去</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/07/21/maven-dependency/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1823,7 +1962,7 @@ const state = store.getState();
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1836,7 +1975,7 @@ const state = store.getState();
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
