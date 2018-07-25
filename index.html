@@ -311,6 +311,148 @@
 <h4 id="结合相关整体结构图"><a href="#结合相关整体结构图" class="headerlink" title="结合相关整体结构图"></a>结合相关整体结构图</h4><p><img src="/2018/07/25/collections/collection_total.jpg" title="集合整体结构图"><a href="https://www.jianshu.com/p/816d41accd37" target="_blank" rel="noopener">图出处</a></p>
 <h4 id="常用集合结构图"><a href="#常用集合结构图" class="headerlink" title="常用集合结构图"></a>常用集合结构图</h4><p><a href="https://blog.csdn.net/sdhgood/article/details/38849477" target="_blank" rel="noopener">图出处</a></p>
 <h4 id="1-Collection"><a href="#1-Collection" class="headerlink" title="1. Collection"></a>1. Collection</h4><p>Collection接口继承了Iterable接口，表明Collection是可以迭代的，关于Iterable的知识，可以查看<a href="https://choleece.github.io/2018/07/25/iterator/" target="_blank" rel="noopener">Iterable</a></p>
+<p>以下是集合抽象出来的一些公共方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法描述</th>
+<th>方法名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>添加一个元素</td>
+<td>add(E e)</td>
+<td></td>
+</tr>
+<tr>
+<td>———-</td>
+<td>—–</td>
+<td></td>
+</tr>
+<tr>
+<td>添加一个集合</td>
+<td>addAll(Collection c)</td>
+<td></td>
+</tr>
+<tr>
+<td>———-</td>
+<td>——————–</td>
+<td></td>
+</tr>
+<tr>
+<td>清除所有的元素</td>
+<td>clear()</td>
+<td></td>
+</tr>
+<tr>
+<td>———–</td>
+<td>——-</td>
+<td></td>
+</tr>
+<tr>
+<td>判断是否存在</td>
+<td>contains()</td>
+<td></td>
+</tr>
+<tr>
+<td>———-</td>
+<td>———-</td>
+<td></td>
+</tr>
+<tr>
+<td>判断是否存在特定集合的所有元素</td>
+<td>containsAll(Collection c)</td>
+<td></td>
+</tr>
+<tr>
+<td>————————-</td>
+<td>————————-</td>
+<td></td>
+</tr>
+<tr>
+<td>判断是否相等</td>
+<td>equals(Object o)</td>
+<td></td>
+</tr>
+<tr>
+<td>———-</td>
+<td>——–</td>
+<td></td>
+</tr>
+<tr>
+<td>判断集合是否为空</td>
+<td>isEmpty()</td>
+<td></td>
+</tr>
+<tr>
+<td>————-</td>
+<td>———</td>
+<td></td>
+</tr>
+<tr>
+<td>移除一个元素</td>
+<td>remove(Object o)</td>
+<td></td>
+</tr>
+<tr>
+<td>———-</td>
+<td>—————-</td>
+<td></td>
+</tr>
+<tr>
+<td>移除一个集合里的元素</td>
+<td>removeAll()</td>
+<td></td>
+</tr>
+<tr>
+<td>—————–</td>
+<td>———–</td>
+<td></td>
+</tr>
+<tr>
+<td>取与一个集合的交集</td>
+<td>retainAll(Collection c)</td>
+<td></td>
+</tr>
+<tr>
+<td>—————</td>
+<td>———————–</td>
+<td></td>
+</tr>
+<tr>
+<td>返回集合里元素的个数</td>
+<td>size()</td>
+<td></td>
+</tr>
+<tr>
+<td>—————–</td>
+<td>——</td>
+<td></td>
+</tr>
+<tr>
+<td>将集合元素返回一个数组</td>
+<td>toArray()</td>
+<td></td>
+</tr>
+<tr>
+<td>———-</td>
+<td>———</td>
+<td></td>
+</tr>
+<tr>
+<td>将集合元素返回一个数组</td>
+<td>toArray(T[] t)</td>
+<td></td>
+</tr>
+<tr>
+<td>——————</td>
+<td>————–</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>说明：关于toArray(T[] t)，如果t.length &gt; collection.size()，那么t多余的部分将置为空，此时调用返回数组的index &gt; collection.size()的话，会出现NPE</p>
 <p>Collection下比较常用的有接口有List, Set, QUeue，这三个接口是直接继承顶级接口的。</p>
 
           
