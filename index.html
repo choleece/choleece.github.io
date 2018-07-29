@@ -376,8 +376,51 @@
 </table>
 <p>说明：关于toArray(T[] t)，如果t.length &gt; collection.size()，那么t多余的部分将置为空，此时调用返回数组的index &gt; collection.size()的话，会出现NPE</p>
 <p>Collection下比较常用的有接口有List, Set, QUeue，这三个接口是直接继承顶级接口的。</p>
-<h5 id="1-List"><a href="#1-List" class="headerlink" title="1. List"></a>1. List</h5><p>List集合代表一个元素有序，可重复的集合，集合中每个元素都有其对应的顺序索引。List集合允许使用重复元素，可以通过索引来访问指定位置的集合元素。List集合默认元素的添加顺序设置元素的索引。</p>
-<p>查看List源码，可以看到，List是直接继承集合的，是属于Collection的一个子接口，因此，List可以使用Collection里所有的方法。且List是有序的几个，因此List集合里增加里一些根据索引来操作集合元素的方法。</p>
+<h5 id="1-List"><a href="#1-List" class="headerlink" title="1. List"></a>1. List</h5><p>List集合代表一个元素<strong>有序，可重复的集合，集合中每个元素都有其对应的顺序索引</strong>。List集合允许使用重复元素，可以通过索引来访问指定位置的集合元素。List集合默认元素的添加顺序设置元素的索引。</p>
+<p>查看List源码，可以看到，List是直接继承集合的，是属于Collection的一个子接口，因此，List可以使用Collection里所有的方法。且List是有序的几个，因此List集合里增加里一些根据索引来操作集合元素的方法。同时List也提供一个比较特殊的迭代器，ListIterator，关于ListIterator的知识，可以查看<a href="https://choleece.github.io/2018/07/25/iterator/" target="_blank" rel="noopener">ListIterator</a></p>
+<p>以下是List抽象出来的一些公共方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法描述</th>
+<th>方法名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在指定位置添加元素</td>
+<td>add(int index, E e)</td>
+</tr>
+<tr>
+<td>在指定位置添加集合</td>
+<td>addAll(int index, E e)</td>
+</tr>
+<tr>
+<td>获取指定位置的元素</td>
+<td>get(int index)</td>
+</tr>
+<tr>
+<td>返回某一元素的最后一个索引</td>
+<td>lastIndexOf(Object o)</td>
+</tr>
+<tr>
+<td>返回某一位置往后的列表的ListIterator</td>
+<td>listIterator(int index)</td>
+</tr>
+<tr>
+<td>替换某一位置的元素</td>
+<td>set(int index, E e)</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>sort()</td>
+</tr>
+<tr>
+<td>返回某一子列表</td>
+<td>subList(int fromIndex, int toIndex)</td>
+</tr>
+</tbody>
+</table>
 
           
         
