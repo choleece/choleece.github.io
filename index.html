@@ -435,6 +435,26 @@
 <td>获取头部数据，并且不删除队头</td>
 <td>element()</td>
 </tr>
+<tr>
+<td>将指定的元素插入此队列，在成功时返回true，如果当前没有可用的空间，则抛出IllegalStateException</td>
+<td>add(E e)</td>
+</tr>
+<tr>
+<td>将指定的元素插入此队列，当使用容量有限制的队列时，此方法通常要优于add(E e)，后者可能无法插入元素，而只是抛出一个异常</td>
+<td>offer(E e)</td>
+</tr>
+<tr>
+<td>获取但<strong>不移除</strong>此队列的头, 如果队列为空，则返回null</td>
+<td>peek()</td>
+</tr>
+<tr>
+<td>获取并<strong>移除</strong>此队列的头，如果队列唯恐，则返回null</td>
+<td>poll()</td>
+</tr>
+<tr>
+<td>获取并移除此队列的头</td>
+<td>remove()</td>
+</tr>
 </tbody>
 </table>
 

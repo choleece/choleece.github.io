@@ -88,7 +88,7 @@
 <meta property="og:description" content="Java 集合内容集合在Java里大致分为两种形式，一个是存储单个对象的，一个是以Key-Value的形式存在的，存储单个对象的对应的是Collection那一支，存储Key-Value的是对应的Map那一支。Collection和Map都是顶级接口。下面这篇文章就开始介绍Collection和Map这两个顶级接口下的内容。 Java集合和数组的区别： 数组长度在初始化时指定，意味着之只能保存定长">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://www.choleece.cn/2018/07/25/collections/collection_total.jpg">
-<meta property="og:updated_time" content="2018-07-30T16:32:05.790Z">
+<meta property="og:updated_time" content="2018-07-30T23:27:57.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="collections Java 集合内容">
 <meta name="twitter:description" content="Java 集合内容集合在Java里大致分为两种形式，一个是存储单个对象的，一个是以Key-Value的形式存在的，存储单个对象的对应的是Collection那一支，存储Key-Value的是对应的Map那一支。Collection和Map都是顶级接口。下面这篇文章就开始介绍Collection和Map这两个顶级接口下的内容。 Java集合和数组的区别： 数组长度在初始化时指定，意味着之只能保存定长">
@@ -433,6 +433,26 @@
 <tr>
 <td>获取头部数据，并且不删除队头</td>
 <td>element()</td>
+</tr>
+<tr>
+<td>将指定的元素插入此队列，在成功时返回true，如果当前没有可用的空间，则抛出IllegalStateException</td>
+<td>add(E e)</td>
+</tr>
+<tr>
+<td>将指定的元素插入此队列，当使用容量有限制的队列时，此方法通常要优于add(E e)，后者可能无法插入元素，而只是抛出一个异常</td>
+<td>offer(E e)</td>
+</tr>
+<tr>
+<td>获取但<strong>不移除</strong>此队列的头, 如果队列为空，则返回null</td>
+<td>peek()</td>
+</tr>
+<tr>
+<td>获取并<strong>移除</strong>此队列的头，如果队列唯恐，则返回null</td>
+<td>poll()</td>
+</tr>
+<tr>
+<td>获取并移除此队列的头</td>
+<td>remove()</td>
 </tr>
 </tbody>
 </table>
