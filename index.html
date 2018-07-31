@@ -457,7 +457,66 @@
 </tr>
 </tbody>
 </table>
-<h4 id="2-Map"><a href="#2-Map" class="headerlink" title="2. Map"></a>2. Map</h4><p>Map是一个顶级接口。Map保存具有映射关系的数据，即key-value键值对的形式。一个Map不能包含一个重复的Key，一个Key值最多对应一个Value。Map接口提供了三种集合试图，包括一个返回<strong>key</strong>的set，一个返回<strong>value</strong>的Collection，还有一个返回<strong>键值对Key-Value</strong>的Set。</p>
+<h4 id="2-Map"><a href="#2-Map" class="headerlink" title="2. Map"></a>2. Map</h4><p>Map是一个顶级接口。Map保存具有映射关系的数据，即key-value键值对的形式。一个Map不能包含一个重复的Key，一个Key值最多对应一个Value。Map接口提供了三种集合试图，包括一个返回<strong>key</strong>的set，一个返回<strong>value</strong>的Collection，还有一个返回<strong>键值对Key-Value</strong>的Set。从Map中取出数据时，只要给出特定的Key，就能取出对应的Value。</p>
+<p>以下是Map抽象出来的一些公共方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法描述</th>
+<th>方法名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>从Map中移除所有的映射关系</td>
+<td>clear()</td>
+</tr>
+<tr>
+<td>判断Map中是否包含某个Key</td>
+<td>containsKey()</td>
+</tr>
+<tr>
+<td>判断Map中是否包含某个Value</td>
+<td>containsValue()</td>
+</tr>
+<tr>
+<td>返回此Map中所有的映射关系Set视图</td>
+<td>Set<map.entry> entrySet()</map.entry></td>
+</tr>
+<tr>
+<td>返回指定Key对应的Value</td>
+<td>get(Key key)</td>
+</tr>
+<tr>
+<td>返回所有Key对应的Key Set视图</td>
+<td>keySet()</td>
+</tr>
+<tr>
+<td>判断此映射是否未包含映射关系</td>
+<td>isEmpty()</td>
+</tr>
+<tr>
+<td>将指定的Key,Value存入到Map中</td>
+<td>put(Key key, V v)</td>
+</tr>
+<tr>
+<td>放入一个Map集合</td>
+<td>put(Map map)</td>
+</tr>
+<tr>
+<td>如果存在一个键值对Key-Value，则将其移除</td>
+<td>remove(Key key)</td>
+</tr>
+<tr>
+<td>返回Map中键值对的个数</td>
+<td>size()</td>
+</tr>
+<tr>
+<td>返回Map中Value的Collection的视图</td>
+<td>values()</td>
+</tr>
+</tbody>
+</table>
 
           
         
