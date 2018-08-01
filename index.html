@@ -232,6 +232,203 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/08/01/Map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="choleece">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="choleece">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/01/Map/" itemprop="url">Map  相关知识点</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T20:38:59+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这篇文章，我们就来介绍下关于Map的一些知识点，Map作为一个Key-Value形式的集合，在平时的开发中，用得相对还是比较多的。</p>
+<p>项目中，用得最多的，应当还是属HashMap。下面我们就从HashMap来开始了解Map相关的实现。</p>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>查看源码，我们直到，HashMap的底层实现原理是基于数组 + 链表组成的，由于本人刚接触的是JDK1.8，所以直接从JDK1.8，开始介绍HashMap的常用方法及其实现，从网上我们能了解到JDK1.7和JDK1.8的实现还是有一些不一样的，如有兴趣的，可以看看<a href="https://mp.weixin.qq.com/s/fZRPogkkUfBnhbZQB5r-uw" target="_blank" rel="noopener">这篇文章</a></p>
+<p>首先我们来看下HashMap的类继承关系，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable &#123;&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>AbstractMap的类继承关系如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract class AbstractMap&lt;&gt; implements Map&lt;K,V&gt;&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看到如上的代码，有人可能有这样的疑惑（反正我是有），为什么HashMap继承了AbstractMap，它为何又要去重新实现一遍Map呢？后来，去搜了一下，<a href="https://blog.csdn.net/zhangzl1012/article/details/73521987" target="_blank" rel="noopener">大家都是这么说的</a>,是这个HashMap的作者Josh Bloch的一个失误，<a href="https://stackoverflow.com/questions/2165204/why-does-linkedhashsete-extend-hashsete-and-implement-sete" target="_blank" rel="noopener">最终的答案出处在这</a></p>
+<p>由上我们可以看到，HashMap继承AbstractMap，那么HashMap肯定拥有Map所拥有的方法，以下是HashMap比较常用的方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法描述</th>
+<th>方法名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>从Map中移除所有的映射关系</td>
+<td>clear()</td>
+</tr>
+<tr>
+<td>判断Map中是否包含某个Key</td>
+<td>containsKey()</td>
+</tr>
+<tr>
+<td>判断Map中是否包含某个Value</td>
+<td>containsValue()</td>
+</tr>
+<tr>
+<td>返回此Map中所有的映射关系Set视图</td>
+<td>Set<map.entry> entrySet()</map.entry></td>
+</tr>
+<tr>
+<td>**返回指定Key对应的Value</td>
+<td>get(Key key)**</td>
+</tr>
+<tr>
+<td>返回所有Key对应的Key Set视图</td>
+<td>keySet()</td>
+</tr>
+<tr>
+<td>判断此映射是否未包含映射关系</td>
+<td>isEmpty()</td>
+</tr>
+<tr>
+<td>**将指定的Key,Value存入到Map中</td>
+<td>put(Key key, V v)**</td>
+</tr>
+<tr>
+<td>放入一个Map集合</td>
+<td>putAll(Map map)</td>
+</tr>
+<tr>
+<td>如果存在一个键值对Key-Value，则将其移除</td>
+<td>remove(Key key)</td>
+</tr>
+<tr>
+<td>返回Map中键值对的个数</td>
+<td>size()</td>
+</tr>
+<tr>
+<td>返回Map中Value的Collection的视图</td>
+<td>values()</td>
+</tr>
+<tr>
+<td>移除特定Key且特定Value的映射关系</td>
+<td>remove(K k, V v)</td>
+</tr>
+<tr>
+<td>替换掉某一对应Key的值</td>
+<td>replace(K k, V v)</td>
+</tr>
+<tr>
+<td>用新值替换掉Key和Value都对应的值</td>
+<td>replace(K k, OldValue old, NewValue new)</td>
+</tr>
+</tbody>
+</table>
+<p>表中标记的，可能是HashMap使用频率最高的两个方法，下面我们着重搞清除这两个方法是如何实现的，首先我们来看一下HashMap的几个重要的参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable &#123;</span><br><span class="line">  static final int DEFAULT_TABLE_CAPACITY = 1 &lt;&lt; 4;</span><br><span class="line">  static final int MAXMUM_CAPACITY = 1 &lt;&lt; 30;</span><br><span class="line"></span><br><span class="line">  transient Node&lt;K,V&gt;[] table;</span><br><span class="line">  int threshold;</span><br><span class="line">  final float ladFactor;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/07/25/collections/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -501,7 +698,7 @@
 </tr>
 <tr>
 <td>放入一个Map集合</td>
-<td>put(Map map)</td>
+<td>putAll(Map map)</td>
 </tr>
 <tr>
 <td>如果存在一个键值对Key-Value，则将其移除</td>
@@ -517,6 +714,7 @@
 </tr>
 </tbody>
 </table>
+<p><a href="https://www.jianshu.com/p/589d58033841" target="_blank" rel="noopener">文章参考</a></p>
 
           
         
@@ -2108,150 +2306,13 @@ Page({
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/01/13/redux-hello-world-md/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="choleece">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="choleece">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/13/redux-hello-world-md/" itemprop="url">初识redux</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-13T19:58:33+08:00">
-                2018-01-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是Redux？"><a href="#什么是Redux？" class="headerlink" title="什么是Redux？"></a>什么是Redux？</h2><p>&nbsp;&nbsp; Redux 是一个JavaScript App的可预测的状态管理器。</p>
-<h2 id="何时用Redux？"><a href="#何时用Redux？" class="headerlink" title="何时用Redux？"></a>何时用Redux？</h2><p>&nbsp;&nbsp; 曾经有人说过，如果你不知道是否需要Redux, 那么你就是不需要Redux.后来Redux的作者Dan Abramov又补充了一句<em>只有遇到React实在解决不了的问题时候到你才需要使用Redux</em>。简单讲，如果你的应用相对比较简单，视图层只从单一的数据源获取数据，操作相对比较简单，你就不需要使用Redux。拿React来作比，我们都知道，React的视图层的渲染依赖着每个组件的内部状态，当应用足够大了之后，就很难管理每个组件的状态，这时候，我们就需要有一个地方来存储整个应用的状态，此时，我们的redux就出场了.</p>
-<h2 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h2><p>  总结起来，两句话：</p>
-<ul>
-<li>web应用是一个状态机器，视图与状态是一一对应的</li>
-<li>应用所有的状态，都保存在一个对象树里，随处可取</li>
-</ul>
-<h2 id="Redux-的安装"><a href="#Redux-的安装" class="headerlink" title="Redux 的安装"></a>Redux 的安装</h2><pre><code>npm install redux --save
-</code></pre><h2 id="Redux的基本概念"><a href="#Redux的基本概念" class="headerlink" title="Redux的基本概念"></a>Redux的基本概念</h2><h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><p>  Store就是Redux管理整个web应用状态的地方，应用在任何地方可以从这棵状态树上取得数据，用于组件的渲染和计算<br>  Redux提供createStore这个函数创建Store，整个应用只允许有一个Store。</p>
-<pre><code>import { createStore } from &apos;redux&apos;;
-const store = createStore(fn);
-</code></pre><h3 id="State"><a href="#State" class="headerlink" title="State"></a>State</h3><p>  前面我们介绍到，Store包含了整个web（当然此时每个组件内部也可同时维护自己的state）应用的状态数据，如果想得到某个时刻的状态，那么就可以从这棵状态树上获取自己的数据。这个时刻的数据，就叫做State,当前时刻的数据，可以通过store.getState()函数获取。</p>
-<pre><code>import { createStore } from &apos;redux&apos;;
-const store = createStore(fn);
-const state = store.getState();
-</code></pre><p>  在开发React的时候，我们知道，state对应view，跟视图层相关的state，如果state值相同，则渲染出来的UI相同。</p>
-<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><p>  前面有提到过，State的变化，可能会导致View的变化。用户能接触到的是视图层，只能通过某种事件来触发State的改变，Action就是充当中间的信使，表示State要更新了<br>  Action是一个对象，其中type属性是必须的,表述Action要做什么操作。</p>
-<pre><code>const action = {
-  type: ADD_LIST,
-  payload: &apos;Redux&apos;
-}
-</code></pre><p>  在上述代码中，要做的操作是ADD_LIST，所携带的信息payload的内容为Redux。从上述例子可以看出，Action描述的是将要发生的事，改变State唯一的途径就是通过触发Action。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2295,7 +2356,7 @@ const state = store.getState();
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2308,7 +2369,7 @@ const state = store.getState();
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

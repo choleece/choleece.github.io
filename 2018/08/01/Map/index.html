@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="https Certbot Let's Encrypt," />
+  <meta name="keywords" content="Collection，Map，HashMap, LinkedHashMap, TreeMap, ConcurrentHashMap，HashTable," />
 
 
 
@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="Let’s Encrypt Https 安全证书 certbot为了使你的网站支持https，你必须从Certificate Authority（CA）获得一个证书， Let’s Encrypt 就是一个CA。Let’s Encrypt部署起来很简单，使用电子子前哨基金会的Certbot就可以完成，下面就介绍利用Certbot完成https的部署。 操作步骤1.打开Let’s Encrypt 官网">
-<meta name="keywords" content="https Certbot Let&#39;s Encrypt">
+<meta name="description" content="这篇文章，我们就来介绍下关于Map的一些知识点，Map作为一个Key-Value形式的集合，在平时的开发中，用得相对还是比较多的。 项目中，用得最多的，应当还是属HashMap。下面我们就从HashMap来开始了解Map相关的实现。 HashMap查看源码，我们直到，HashMap的底层实现原理是基于数组 + 链表组成的，由于本人刚接触的是JDK1.8，所以直接从JDK1.8，开始介绍HashMa">
+<meta name="keywords" content="Collection，Map，HashMap, LinkedHashMap, TreeMap, ConcurrentHashMap，HashTable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="https 安全证书部署 certbot let&#39;s encrypt">
-<meta property="og:url" content="https://www.choleece.cn/2018/03/19/certbot/index.html">
+<meta property="og:title" content="Map  相关知识点">
+<meta property="og:url" content="https://www.choleece.cn/2018/08/01/Map/index.html">
 <meta property="og:site_name" content="choleece">
-<meta property="og:description" content="Let’s Encrypt Https 安全证书 certbot为了使你的网站支持https，你必须从Certificate Authority（CA）获得一个证书， Let’s Encrypt 就是一个CA。Let’s Encrypt部署起来很简单，使用电子子前哨基金会的Certbot就可以完成，下面就介绍利用Certbot完成https的部署。 操作步骤1.打开Let’s Encrypt 官网">
+<meta property="og:description" content="这篇文章，我们就来介绍下关于Map的一些知识点，Map作为一个Key-Value形式的集合，在平时的开发中，用得相对还是比较多的。 项目中，用得最多的，应当还是属HashMap。下面我们就从HashMap来开始了解Map相关的实现。 HashMap查看源码，我们直到，HashMap的底层实现原理是基于数组 + 链表组成的，由于本人刚接触的是JDK1.8，所以直接从JDK1.8，开始介绍HashMa">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.choleece.cn/2018/03/19/certbot/certbot.jpg">
-<meta property="og:image" content="https://www.choleece.cn/2018/03/19/certbot/certbot_error.jpg">
-<meta property="og:updated_time" content="2018-06-23T08:33:58.311Z">
+<meta property="og:updated_time" content="2018-08-01T15:02:49.627Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="https 安全证书部署 certbot let&#39;s encrypt">
-<meta name="twitter:description" content="Let’s Encrypt Https 安全证书 certbot为了使你的网站支持https，你必须从Certificate Authority（CA）获得一个证书， Let’s Encrypt 就是一个CA。Let’s Encrypt部署起来很简单，使用电子子前哨基金会的Certbot就可以完成，下面就介绍利用Certbot完成https的部署。 操作步骤1.打开Let’s Encrypt 官网">
-<meta name="twitter:image" content="https://www.choleece.cn/2018/03/19/certbot/certbot.jpg">
+<meta name="twitter:title" content="Map  相关知识点">
+<meta name="twitter:description" content="这篇文章，我们就来介绍下关于Map的一些知识点，Map作为一个Key-Value形式的集合，在平时的开发中，用得相对还是比较多的。 项目中，用得最多的，应当还是属HashMap。下面我们就从HashMap来开始了解Map相关的实现。 HashMap查看源码，我们直到，HashMap的底层实现原理是基于数组 + 链表组成的，由于本人刚接触的是JDK1.8，所以直接从JDK1.8，开始介绍HashMa">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://www.choleece.cn/2018/03/19/certbot/"/>
+  <link rel="canonical" href="https://www.choleece.cn/2018/08/01/Map/"/>
 
 
 
 
 
-  <title>https 安全证书部署 certbot let's encrypt | choleece</title>
+  <title>Map  相关知识点 | choleece</title>
   
 
 
@@ -236,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/03/19/certbot/">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/08/01/Map/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="choleece">
@@ -253,7 +250,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">https 安全证书部署 certbot let's encrypt</h2>
+          <h2 class="post-title" itemprop="name headline">Map  相关知识点</h2>
         
 
         <div class="post-meta">
@@ -265,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T07:24:40+08:00">
-                2018-03-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T20:38:59+08:00">
+                2018-08-01
               </time>
             
 
@@ -303,68 +300,84 @@
       
 
       
-        <h3 id="Let’s-Encrypt-Https-安全证书-certbot"><a href="#Let’s-Encrypt-Https-安全证书-certbot" class="headerlink" title="Let’s Encrypt Https 安全证书 certbot"></a>Let’s Encrypt Https 安全证书 certbot</h3><p>为了使你的网站支持https，你必须从Certificate Authority（CA）获得一个证书， Let’s Encrypt 就是一个CA。Let’s Encrypt部署起来很简单，使用电子子前哨基金会的Certbot就可以完成，下面就介绍利用Certbot完成https的部署。</p>
-<h3 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h3><p>1.打开Let’s Encrypt 官网</p>
-<p>  <a href="https://letsencrypt.org/getting-started/" target="_blank" rel="noopener">https://letsencrypt.org/getting-started/</a></p>
-<p>2.选择其中的With Shell Access，点击Certbot来到Certbot官网，前两步也可直接点击Certbot官网</p>
-<p>  <a href="https://certbot.eff.org/lets-encrypt/" target="_blank" rel="noopener">https://certbot.eff.org/lets-encrypt/</a></p>
-<p>3.根据自己的的服务器需求安装，我选的是Nginx + Centos7</p>
-<img src="/2018/03/19/certbot/certbot.jpg" title="选择服务器环境">
-<p>4.为了立马就能看见效果，先保证nginx 80端口已经开启。接下来按照官网的步骤走</p>
-<p>首先允许EPEL仓库</p>
-<pre><code>yum -y install yum-utils
-yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
-</code></pre><p>安装certbot-nginx</p>
-<pre><code>yum install certbot-nginx
-</code></pre><p>开始运行</p>
-<pre><code>certbot --nginx
-</code></pre><p>以上步骤是certbot官方网站上的操作步骤，进行这一步时，回出现错误，错误如下：</p>
-<img src="/2018/03/19/certbot/certbot_error.jpg" title="运行报错">
-<p>解决方案<br>  以上报错是python包没找到，下边介绍另外一种方法，利用pip进行安装</p>
-<p>  首先升级pip</p>
-<pre><code>pip install --upgrade pip
-</code></pre><p>  卸载yum安装的certbot和pyOpenSSL</p>
-<pre><code>yum remove certbot-nginx pyOpenSSL
-</code></pre><p>  pip安装certbot</p>
-<pre><code>pip install certbot-nginx
-</code></pre><p>  如果碰到了Python.h或者pyconfig.h找不到的错误，于是安装Python的devel包（不一定会出现）：</p>
-<pre><code>yum install -y python-devel
-</code></pre><p>  再次运行pip install certbot-nginx,如果提示找不到opensslv.h头文件，于是安装OpenSSL的devel包（不一定出现）：</p>
-<pre><code>yum install -y openssl-devel
-</code></pre><p>  如果pip install certbot-nginx 一次成功，则不需要运行上边两句命令。</p>
-<p>  有时候根据系统的不同会出现不同的情况，近期在配置系统的上述方法不太好用，具体原因是pyOpenSSL版本太高，当时操作的时候是18,用yum默认安装的是0.13，但是certbot运行的版本要求&gt;=0.14，然后我试着重新去下载了0.15,发现有另外一个问题，然后重新下了一遍0.17，奇迹般的好用了，下面贴出下载链接：<br>  <a href="http://rpm.pbone.net/index.php3/stat/4/idpl/44092374/dir/centos_7/com/python2-pyOpenSSL-17.3.0-3.el7.noarch.rpm.html" target="_blank" rel="noopener">http://rpm.pbone.net/index.php3/stat/4/idpl/44092374/dir/centos_7/com/python2-pyOpenSSL-17.3.0-3.el7.noarch.rpm.html</a><br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">先进行下载：</span><br><span class="line">    wget ftp://ftp.ntua.gr/pub/linux/centos/7.5.1804/cloud/x86_64/openstack-queens/python2-pyOpenSSL-17.3.0-3.el7.noarch.rpm;</span><br><span class="line">然后安装:</span><br><span class="line">    rpm -Uvh pyOpenSSL.**.rpm</span><br></pre></td></tr></table></figure></p>
-<p>自动续期</p>
-<p>  let’s encrypt 证书默认的有效期是90天的时间，所以我们需要自动续期</p>
-<p>  先来添加一个service</p>
-<pre><code>$ sudo vim /etc/systemd/system/letsencrypt.service
-
-[Unit]
-Description=Let&apos;s Encrypt renewal
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/certbot renew --quiet --agree-tos
-ExecStartPost=/bin/systemctl reload nginx.service
-</code></pre><p>  然后添加一个systemd timer来定时触发这个任务</p>
-<pre><code>$ sudo vim /etc/systemd/system/letsencrypt.timer
-[Unit]
-Description=Daily renewal of Let&apos;s Encrypt&apos;s certificates
-
-[Timer]
-OnCalendar=daily
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-</code></pre><p>  启动服务，开启timer</p>
-<pre><code>$ sudo systemctl enable letsencrypt.timer
-$ sudo systemctl start letsencrypt.timer
-</code></pre><p>  以上总体按照官网每次操作都有不同的问题，希望能出个稳定的版本，反正按照官网的步骤，一定是会出错（至少我实践这么多次是这样）</p>
-<p>参考链接：</p>
-<p>  <a href="https://letsencrypt.org/getting-started/" target="_blank" rel="noopener">https://letsencrypt.org/getting-started/</a></p>
-<p>  <a href="https://certbot.eff.org/lets-encrypt/centosrhel7-nginx" target="_blank" rel="noopener">https://certbot.eff.org/lets-encrypt/centosrhel7-nginx</a></p>
-<p>  <a href="https://tlanyan.me/certbot-importerror-pyopenssl-module-missing-required-functionality/" target="_blank" rel="noopener">https://tlanyan.me/certbot-importerror-pyopenssl-module-missing-required-functionality/</a></p>
-<p>  <a href="https://blog.nswebfrog.com/2017/12/14/letsencrypt-renew/" target="_blank" rel="noopener">https://blog.nswebfrog.com/2017/12/14/letsencrypt-renew/</a></p>
+        <p>这篇文章，我们就来介绍下关于Map的一些知识点，Map作为一个Key-Value形式的集合，在平时的开发中，用得相对还是比较多的。</p>
+<p>项目中，用得最多的，应当还是属HashMap。下面我们就从HashMap来开始了解Map相关的实现。</p>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>查看源码，我们直到，HashMap的底层实现原理是基于数组 + 链表组成的，由于本人刚接触的是JDK1.8，所以直接从JDK1.8，开始介绍HashMap的常用方法及其实现，从网上我们能了解到JDK1.7和JDK1.8的实现还是有一些不一样的，如有兴趣的，可以看看<a href="https://mp.weixin.qq.com/s/fZRPogkkUfBnhbZQB5r-uw" target="_blank" rel="noopener">这篇文章</a></p>
+<p>首先我们来看下HashMap的类继承关系，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable &#123;&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>AbstractMap的类继承关系如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract class AbstractMap&lt;&gt; implements Map&lt;K,V&gt;&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看到如上的代码，有人可能有这样的疑惑（反正我是有），为什么HashMap继承了AbstractMap，它为何又要去重新实现一遍Map呢？后来，去搜了一下，<a href="https://blog.csdn.net/zhangzl1012/article/details/73521987" target="_blank" rel="noopener">大家都是这么说的</a>,是这个HashMap的作者Josh Bloch的一个失误，<a href="https://stackoverflow.com/questions/2165204/why-does-linkedhashsete-extend-hashsete-and-implement-sete" target="_blank" rel="noopener">最终的答案出处在这</a></p>
+<p>由上我们可以看到，HashMap继承AbstractMap，那么HashMap肯定拥有Map所拥有的方法，以下是HashMap比较常用的方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法描述</th>
+<th>方法名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>从Map中移除所有的映射关系</td>
+<td>clear()</td>
+</tr>
+<tr>
+<td>判断Map中是否包含某个Key</td>
+<td>containsKey()</td>
+</tr>
+<tr>
+<td>判断Map中是否包含某个Value</td>
+<td>containsValue()</td>
+</tr>
+<tr>
+<td>返回此Map中所有的映射关系Set视图</td>
+<td>Set<map.entry> entrySet()</map.entry></td>
+</tr>
+<tr>
+<td>**返回指定Key对应的Value</td>
+<td>get(Key key)**</td>
+</tr>
+<tr>
+<td>返回所有Key对应的Key Set视图</td>
+<td>keySet()</td>
+</tr>
+<tr>
+<td>判断此映射是否未包含映射关系</td>
+<td>isEmpty()</td>
+</tr>
+<tr>
+<td>**将指定的Key,Value存入到Map中</td>
+<td>put(Key key, V v)**</td>
+</tr>
+<tr>
+<td>放入一个Map集合</td>
+<td>putAll(Map map)</td>
+</tr>
+<tr>
+<td>如果存在一个键值对Key-Value，则将其移除</td>
+<td>remove(Key key)</td>
+</tr>
+<tr>
+<td>返回Map中键值对的个数</td>
+<td>size()</td>
+</tr>
+<tr>
+<td>返回Map中Value的Collection的视图</td>
+<td>values()</td>
+</tr>
+<tr>
+<td>移除特定Key且特定Value的映射关系</td>
+<td>remove(K k, V v)</td>
+</tr>
+<tr>
+<td>替换掉某一对应Key的值</td>
+<td>replace(K k, V v)</td>
+</tr>
+<tr>
+<td>用新值替换掉Key和Value都对应的值</td>
+<td>replace(K k, OldValue old, NewValue new)</td>
+</tr>
+</tbody>
+</table>
+<p>表中标记的，可能是HashMap使用频率最高的两个方法，下面我们着重搞清除这两个方法是如何实现的，首先我们来看一下HashMap的几个重要的参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt;, Cloneable, Serializable &#123;</span><br><span class="line">  static final int DEFAULT_TABLE_CAPACITY = 1 &lt;&lt; 4;</span><br><span class="line">  static final int MAXMUM_CAPACITY = 1 &lt;&lt; 30;</span><br><span class="line"></span><br><span class="line">  transient Node&lt;K,V&gt;[] table;</span><br><span class="line">  int threshold;</span><br><span class="line">  final float ladFactor;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -382,7 +395,7 @@ $ sudo systemctl start letsencrypt.timer
       
         <div class="post-tags">
           
-            <a href="/tags/https-Certbot-Let-s-Encrypt/" rel="tag"># https Certbot Let's Encrypt</a>
+            <a href="/tags/Collection，Map，HashMap-LinkedHashMap-TreeMap-ConcurrentHashMap，HashTable/" rel="tag"># Collection，Map，HashMap, LinkedHashMap, TreeMap, ConcurrentHashMap，HashTable</a>
           
         </div>
       
@@ -395,8 +408,8 @@ $ sudo systemctl start letsencrypt.timer
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/16/tab-view-md/" rel="next" title="小程序顶部TabView">
-                <i class="fa fa-chevron-left"></i> 小程序顶部TabView
+              <a href="/2018/07/25/collections/" rel="next" title="collections Java 集合内容">
+                <i class="fa fa-chevron-left"></i> collections Java 集合内容
               </a>
             
           </div>
@@ -404,10 +417,6 @@ $ sudo systemctl start letsencrypt.timer
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/22/java-design-pattern/" rel="prev" title="设计模式 Java篇">
-                设计模式 Java篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -530,7 +539,7 @@ $ sudo systemctl start letsencrypt.timer
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Let’s-Encrypt-Https-安全证书-certbot"><span class="nav-number">1.</span> <span class="nav-text">Let’s Encrypt Https 安全证书 certbot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作步骤"><span class="nav-number">2.</span> <span class="nav-text">操作步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap"><span class="nav-number">1.</span> <span class="nav-text">HashMap</span></a></li></ol></div>
             
 
           </div>
