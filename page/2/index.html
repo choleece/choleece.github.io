@@ -232,6 +232,241 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/01/16/tab-view-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="choleece">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="choleece">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/16/tab-view-md/" itemprop="url">小程序顶部TabView</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T23:03:11+08:00">
+                2018-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>下面我们将利用小程序的scroll-view &amp; swipper制作tab-view</p>
+<h3 id="建立wxml"><a href="#建立wxml" class="headerlink" title="建立wxml"></a>建立wxml</h3><p>整个页面由顶部的标题栏+可滑动的body组成</p>
+<pre><code>&lt;view class=&quot;stv-container&quot;&gt;
+  &lt;view class=&quot;tab-bar&quot;&gt;
+    &lt;view wx:for=&quot;{{titles}}&quot; wx:key=&quot;unique&quot; data-index=&quot;{{index}}&quot; bindtap=&quot;handlerTabTap&quot; class=&quot;tab {{activeIndex==index?'tab-active':''}}&quot; style=&quot;width: {{stv.windowWidth/titles.length}}px&quot;&gt;
+        &lt;text&gt;{{item}}&lt;/text&gt;
+    &lt;/view&gt;
+    &lt;view style=&quot;width: {{stv.lineWidth}}px; left: {{stv.offset/titles.length}}px&quot; class=&quot;under-line {{!stv.tStart? 'withAnimate': ''}}&quot;&gt;&lt;/view&gt;
+  &lt;/view&gt;
+  &lt;view style=&quot;padding: 15px; height: 100%; margin-top: 30px; background-color: #fafafa&quot;&gt;
+    &lt;swiper duration=&quot;500&quot; bindchange=&quot;swiper&quot; current=&quot;{{activeIndex}}&quot; style=&quot;height: 100%&quot;&gt;
+        &lt;block wx:for=&quot;{{contents}}&quot; wx:key=&quot;*this&quot;&gt;
+            &lt;swiper-item&gt;
+                &lt;view style=&quot;height: 100%&quot;&gt;
+                    &lt;text&gt;{{contents[index]}}&lt;/text&gt;
+                &lt;/view&gt;
+            &lt;/swiper-item&gt;
+        &lt;/block&gt;
+    &lt;/swiper&gt;
+  &lt;/view&gt;
+&lt;/view&gt;
+</code></pre><h3 id="建立wxjs"><a href="#建立wxjs" class="headerlink" title="建立wxjs"></a>建立wxjs</h3><p>  以上代码是整个页面的布局， 可滑动的body我们用swiper组成，接下来是组成页面的数据滑动或者点击的方法，代码如下：</p>
+<pre><code>// pages/newMusic/index.js
+Page({
+  /**
+  * 页面的初始数据
+  */
+  data: {
+    activeIndex: 0,
+    stv: {
+      windowWidth: 0,
+      lineWidth: 0,
+      offset: 0,
+      tStart: false
+    },
+    titles: [&apos;文字一&apos;, &apos;文字二&apos;, &apos;文字三&apos;, &apos;文字四&apos;],
+    contents: [
+      &quot;小时候，我穿着老爸的直筒袜，想象着我在大西部论坛球馆，投中制胜球的样子，我就深深明白一件事，我爱上了篮球，我爱你如此深以致贡献所有， 我的思想和身体， 我的精神和灵魂， 六岁开始， 我就深爱着你&quot;,
+      &quot;从未想到过结束，我只看到自己，在这条路上奔跑到尽头，所以我不停地跑，在 每个球馆我全力奔跑，为你争取每次机会，你要求我拼尽所有，所以我奉上真心，因为这里包含太多，我带着汗水和伤痛，不仅因为挑战&quot;,
+      &quot;而是你在召唤我，我为你奉献所有，因为你也赠予我全部，因为篮球，我感到是一个鲜活的人，你让6岁孩子实现湖人梦，为此我将永远爱你，但我不能再迷恋你，这个赛季是我仅能给，心还能继续承受打击，意志也还能被碾磨&quot;,
+      &quot;但身体知道是时候说再见，我已经准备让你离开，现在只是想让你知道，我们能永远珍藏着每段时光，无论是好的，还是坏的，我们已贡献给彼此，所有的全部，无论接下来我会做什么，我都会是那个孩子，穿着老爸直筒袜，瞄准角落里的垃圾桶&quot;
+      ]
+    },
+
+  /**
+  * 生命周期函数--监听页面加载
+  */
+  onLoad: function (options) {},
+
+  bodyChange: function(e) {
+    console.log(e.target.dataset.value);
+    this.setData({
+      activeIndex: e.target.dataset.value
+    });
+  },
+  swiper: function(e){
+    this._updateSelectedPage(e.detail.current);
+  },
+  bodyscroll:function(e){
+    console.log(e);
+  },
+  _updateSelectedPage(page) {
+    let {titles, stv, activeIndex} = this.data;
+    activeIndex = page;
+    this.setData({activeIndex: activeIndex})
+    stv.offset = stv.windowWidth*activeIndex;
+    this.setData({stv: this.data.stv})
+  },
+  handlerTabTap(e) {
+    this._updateSelectedPage(e.currentTarget.dataset.index);
+  }
+});
+</code></pre><h3 id="建立WXSS"><a href="#建立WXSS" class="headerlink" title="建立WXSS"></a>建立WXSS</h3><p>  以下内容为页面样式：</p>
+<pre><code>.stv-container {
+  height: 100%
+}
+.withAnimate {
+  transition: all 100ms ease;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  perspective: 1000;
+}
+.stv-container .tab-bar {
+  position: fixed;
+  display: flex;
+  font-size: 30rpx;
+  color: #666666;
+  background-color: #fff;
+  z-index: 999;
+  top: 0;
+}
+.stv-container .tab-bar .tab-active {
+  color: #2d80ff;
+}
+.stv-container .tab-bar .tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 16rpx;
+  padding-bottom: 20rpx;
+}
+.stv-container .tab-bar .under-line {
+  position: absolute;
+  bottom: 0;
+  height: 6rpx;
+  background-color: #2d80ff;
+}
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/01/13/redux-hello-world-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -410,7 +645,7 @@ const state = store.getState();
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -423,7 +658,7 @@ const state = store.getState();
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -460,7 +695,7 @@ const state = store.getState();
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
