@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="choleece">
 <meta property="og:description" content="如果你知道进程间的通信，那么对你来说，线程间的通信将会很容易，当你在开发一个产品当时候，如果涉及到两个或多个线程间交换信息，那么线程间的通信知识对你来说，将会非常重要。 下面有三个简单的方法和技巧来让线程间的通信成为可能：    序号 方法描述     1 public void wait();导致当前线程阻塞，知道另外一个线程执行notify()方法   2 public void notify">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-20T06:11:29.326Z">
+<meta property="og:updated_time" content="2019-04-20T06:13:11.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程间的通信">
 <meta name="twitter:description" content="如果你知道进程间的通信，那么对你来说，线程间的通信将会很容易，当你在开发一个产品当时候，如果涉及到两个或多个线程间交换信息，那么线程间的通信知识对你来说，将会非常重要。 下面有三个简单的方法和技巧来让线程间的通信成为可能：    序号 方法描述     1 public void wait();导致当前线程阻塞，知道另外一个线程执行notify()方法   2 public void notify">
@@ -359,9 +359,8 @@
 <li><p>此时，t2还未释放掉m的对象锁，然后进入t2的第二次循环，此时flag=false, t2会执行wait()操作，将自己挂起，同时释放掉m的对象锁，此时t1会获得CPU的时间分片，会继续沿着上次的断点执行，也即打印</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(t1.s1[1]) -&gt; How are you?</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>然后执行flag = true,然后执行notify()操作，同步唤醒t2，然后在t1进行第三次for循环后，又将自己wait()，同时释放自身锁。</p>
-<ol>
+<li><p>然后执行flag = true,然后执行notify()操作，同步唤醒t2，然后在t1进行第三次for循环后，又将自己wait()，同时释放自身锁。</p>
+</li>
 <li><p>紧接着t2获取到CPU的时间分片，接着上次挂起的断点执行，t2.answer执行打印操作，打印t2.s2[1] -&gt; I am good, What about you?，然后将flag设置为false，并且执行notify()</p>
 </li>
 <li><p>t2在第三次循环后，由于flag为false,则会执行wait()操作，将自己挂起，并且释放掉m的对象锁，</p>

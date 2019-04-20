@@ -362,9 +362,8 @@
 <li><p>此时，t2还未释放掉m的对象锁，然后进入t2的第二次循环，此时flag=false, t2会执行wait()操作，将自己挂起，同时释放掉m的对象锁，此时t1会获得CPU的时间分片，会继续沿着上次的断点执行，也即打印</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(t1.s1[1]) -&gt; How are you?</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>然后执行flag = true,然后执行notify()操作，同步唤醒t2，然后在t1进行第三次for循环后，又将自己wait()，同时释放自身锁。</p>
-<ol>
+<li><p>然后执行flag = true,然后执行notify()操作，同步唤醒t2，然后在t1进行第三次for循环后，又将自己wait()，同时释放自身锁。</p>
+</li>
 <li><p>紧接着t2获取到CPU的时间分片，接着上次挂起的断点执行，t2.answer执行打印操作，打印t2.s2[1] -&gt; I am good, What about you?，然后将flag设置为false，并且执行notify()</p>
 </li>
 <li><p>t2在第三次循环后，由于flag为false,则会执行wait()操作，将自己挂起，并且释放掉m的对象锁，</p>
