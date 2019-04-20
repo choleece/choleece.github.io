@@ -232,6 +232,197 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2019/04/20/thread-communication/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="choleece">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="choleece">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/20/thread-communication/" itemprop="url">线程间的通信</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T14:08:06+08:00">
+                2019-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>如果你知道进程间的通信，那么对你来说，线程间的通信将会很容易，当你在开发一个产品当时候，如果涉及到两个或多个线程间交换信息，那么线程间的通信知识对你来说，将会非常重要。</p>
+<p>下面有三个简单的方法和技巧来让线程间的通信成为可能：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">public void wait();导致当前线程阻塞，知道另外一个线程执行notify()方法</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">public void notify();唤醒一个对象监听器上正在等待的线程</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">public void notifyAll();唤醒所有在同一个对象上执行过wait()方法的线程</td>
+</tr>
+</tbody>
+</table>
+<p>这些方法在Object对象中是作为final类型实现的，所以这些方法在所有的类里都可以使用，以上三个方法，只能在synchronized上下文中执行；</p>
+<p>以下的这个例子，将向你展示如何在两个线程之间，通过wait()和notify()这两个方法实现通信。</p>
+<p>定义Chat类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by choleece on 2019/4/20.</span><br><span class="line"> */</span><br><span class="line">public class Chat &#123;</span><br><span class="line">    boolean flag = false;</span><br><span class="line"></span><br><span class="line">    public synchronized void question(String msg) &#123;</span><br><span class="line">        if (flag) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        flag = true;</span><br><span class="line">        notify();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public synchronized void answer(String msg) &#123;</span><br><span class="line">        if (!flag) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        flag = false;</span><br><span class="line">        notify();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义T1类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by choleece on 2019/4/20.</span><br><span class="line"> */</span><br><span class="line">public class T1 implements Runnable &#123;</span><br><span class="line">    Chat m;</span><br><span class="line">    String[] s1 = &#123;&quot;Hi!I am T1&quot;, &quot;How are you?&quot;, &quot;I am also doing fine!&quot;&#125;;</span><br><span class="line"></span><br><span class="line">    public T1(Chat m1) &#123;</span><br><span class="line">        this.m = m1;</span><br><span class="line">        new Thread(this, &quot;question&quot;).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        for (int i = 0; i &lt; s1.length; i++) &#123;</span><br><span class="line">            m.question(s1[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义T2类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by choleece on 2019/4/20.</span><br><span class="line"> */</span><br><span class="line">public class T2 implements Runnable &#123;</span><br><span class="line">    Chat m1;</span><br><span class="line">    String[] s2 = &#123;&quot;Hi!I am T2&quot;, &quot;I am good, What about you?&quot;, &quot;Great!&quot;&#125;;</span><br><span class="line"></span><br><span class="line">    public T2(Chat m1) &#123;</span><br><span class="line">        this.m1 = m1;</span><br><span class="line">        new Thread(this, &quot;answer&quot;).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        for (int i = 0; i &lt; s2.length; i++) &#123;</span><br><span class="line">            m1.answer(s2[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义TestThread类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *</span><br><span class="line"> * @author choleece</span><br><span class="line"> * @date 2019/4/20</span><br><span class="line"> */</span><br><span class="line">public class TestThread &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Chat m = new Chat();</span><br><span class="line">        new T1(m);</span><br><span class="line">        System.out.println(&quot;main thread&quot;);</span><br><span class="line">        new T2(m);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>查看运行结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">main thread</span><br><span class="line">Hi!I am T1</span><br><span class="line">Hi!I am T2</span><br><span class="line">How are you?</span><br><span class="line">I am good, What about you?</span><br><span class="line">I am also doing fine!</span><br><span class="line">Great!</span><br></pre></td></tr></table></figure></p>
+<p>接下来，我们一步一步分析，为什么会出现以上打印结果，看看与我们预期的是否一致。</p>
+<ol>
+<li><p>首先，实例化一个chat对象，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Chat m = new Chat();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接着实例化T1，将chat作为参数，传入构造函数.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new T1(m);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在T1的构造函数里，我们看到，会将m对象赋值给t1的Chat属性，紧接着，创建一个线程，然后执行start()方法[<strong>注意，此时有可能子线程start()方法还没开始执行，也即子线程没获取到CPU的时间片，函数会继续往下执行，去实例化T2，但是不管如何，都不影响主流程</strong>]，在子线程执行start()后，函数会进入到run()方法里，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void run() &#123;</span><br><span class="line">    for (int i = 0; i &lt; s1.length; i++) &#123;</span><br><span class="line">        m.question(s1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数会执行m.question(“Hi”),进而进入到Chat类的question(String msg)方法里，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void question(String msg) &#123;</span><br><span class="line">    if (flag) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            wait();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(msg);</span><br><span class="line">    flag = true;</span><br><span class="line">    notify();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此时，T1子线程获取到m的对象锁，判断flag，初始时，question()方法直接进行打印及以后操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 此时会打印第一次Hi!(也即t1.s1[0])</span><br><span class="line">System.out.println(msg);</span><br><span class="line">flag = true;</span><br><span class="line">notify();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>紧接着，将flag置为true，根据上边的描述T2可能已经被实例化了，此时t2执行answer方法，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void answer(String msg) &#123;</span><br><span class="line">    if (!flag) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            wait();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(msg);</span><br><span class="line">    flag = false;</span><br><span class="line">    notify();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>由于t1在第一次for循环执行question()后占用了对象m，此时还是占用锁，所以即使t2进入了for循环，也获取不到m对象的锁，只能继续被阻塞，此时t1又获得CPU时间分片，继续执行第二次for循环。<br>在t1的第一次for循环中，已经将flag设置为true，所以第二次进入的时候，会进去执行wait()操作，从而将自身挂起，并且释放刚才锁占用的对象锁。</p>
+<ol>
+<li><p>t2线程再次获取到CPU的时间分片，然后执行第一次for循环，由于此时flag为true,所以t2会执行如下打印语句,并且将flag设置为false，同时执行notify，t1被唤醒:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 此时会打印Hi! I am T2, 也即t2.s2[0]</span><br><span class="line">System.out.println(msg);</span><br><span class="line">flag = false;</span><br><span class="line">notify();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此时，t2还未释放掉m的对象锁，然后进入t2的第二次循环，此时flag=false, t2会执行wait()操作，将自己挂起，同时释放掉m的对象锁，此时t1会获得CPU的时间分片，会继续沿着上次的断点执行，也即打印</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(t1.s1[1]) -&gt; How are you?</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后执行flag = true,然后执行notify()操作，同步唤醒t2，然后在t1进行第三次for循环后，又将自己wait()，同时释放自身锁。</p>
+<ol>
+<li><p>紧接着t2获取到CPU的时间分片，接着上次挂起的断点执行，t2.answer执行打印操作，打印t2.s2[1] -&gt; I am good, What about you?，然后将flag设置为false，并且执行notify()</p>
+</li>
+<li><p>t2在第三次循环后，由于flag为false,则会执行wait()操作，将自己挂起，并且释放掉m的对象锁，</p>
+</li>
+<li><p>t1在被分到CPU时间分片后，接着上次的断点执行，打印t1.s1[2] -&gt; I am also doing fine!，同时将flag=true，然后notify(),t2被唤醒，至此，t1执行完毕，生命终止</p>
+</li>
+<li><p>t2在获得CPU时间分片后，接着上次的断点执行，答应t2.s2[2] -&gt; Great!，至此，t2的生命终止。程序执行完毕！</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2019/04/18/thread-operate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2164,137 +2355,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.choleece.cn/2018/05/31/java-reference/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="choleece">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="choleece">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/31/java-reference/" itemprop="url">java-reference</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-31T07:32:07+08:00">
-                2018-05-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Java-强引用、弱引用、软引用、虚引用的区别"><a href="#Java-强引用、弱引用、软引用、虚引用的区别" class="headerlink" title="Java 强引用、弱引用、软引用、虚引用的区别"></a>Java 强引用、弱引用、软引用、虚引用的区别</h3><h4 id="Java-中有如下四种引用类型"><a href="#Java-中有如下四种引用类型" class="headerlink" title="Java 中有如下四种引用类型"></a>Java 中有如下四种引用类型</h4><ol>
-<li>强引用 StrongReference</li>
-<li>弱引用 WeekReference</li>
-<li>软引用 SoftReference</li>
-<li>虚引用 PhantomReference</li>
-</ol>
-<p>强引用是我们在编程过程中最简单的引用，如String s = “abc”中变量s就是对字符串”abc”的强引用，任何被强引用指向的对象都不能被GC回收，这些对象都是在程序中需要的。弱引用使用java.lang.ref.WeakReference class表示，我们可以使用如下代码创建弱引用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Counter counter = new Counter(); // strong reference</span><br><span class="line">WeakReference&lt;Counter&gt; wf = new WeakReference&lt;Counter&gt;(counter); // weak</span><br><span class="line">counter = null; // 现在counter 是可以被GC回收的</span><br></pre></td></tr></table></figure>
-<p>在给对象赋值null后，该对象就可以被GC回收。该对象不再有强引用，即使该对象有若引用，也会被GC立即回收，相反，如果该对象有软引用，counter不会被立即回收，除非JVM需要内存，Java中的软引用使用java.lang.ref.SoftReference类来表示，我们可以使用如下代码创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SoftReference soft = new SoftReference(counter);</span><br></pre></td></tr></table></figure></p>
-<p>鉴于软引用和弱引用这一区别，软引用更适用于缓存机制，弱引用更适用于存储元数据。另一个使用软引用的例子是，WeakHashMap，它有一个特点，map里边的key都被封装成弱引用，也就是说，一旦强引用被删除，WeakHashMap内部的弱引用就无法组织GC对该对象的回收。<br>虚引用是java.lang.ref包中的第三种引用，使用java.lang.ref.PhantomReference类来表示。拥有虚引用的对象可以在任何时候被GC回收，和其他形式类似，创建虚引用的形式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PhantomReference pr = new PhantomReference(counter);</span><br></pre></td></tr></table></figure></p>
-<p>一个对象的生命周期如下图所示：<br><img src="/2018/05/31/java-reference/afd3fcba0d61a802c4a8ae970059ee77.gif" title="对象生命周期"></p>
-<p>原文出处：<a href="http://www.importnew.com/10866.html" target="_blank" rel="noopener">http://www.importnew.com/10866.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2345,7 +2405,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2358,7 +2418,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
